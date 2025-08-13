@@ -3,7 +3,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg)](https://nodejs.org/en/download/releases/)
 
-A Model Context Protocol (MCP) server that provides programmatic access to [Basecoat CSS](https://basecoat.dev/) components and their usage documentation. This server allows AI assistants to help developers build HTML interfaces using the Basecoat CSS framework.
+## Story
+
+While building my hobby project — turning old devices into a [Digital Photo Frame](https://github.com/Sorbh/digital-photo-frame) — I struggled with UI components. I wanted to use [Basecoat CSS](https://basecoatui.com/), the HTML port of [ShadCN UI](https://ui.shadcn.com/), but there was no MCP server to easily pull components and docs into AI-assisted coding.
+
+So I built one.  
+This is my first MCP server, and it’s here to make working with Basecoat (and ShadCN-style components) effortless for everyone. Feedback and contributions are welcome!
+
+---
+
+A Model Context Protocol (MCP) server that provides programmatic access to [Basecoat CSS](https://basecoatui.com/) components and their usage documentation. This server allows AI assistants to help developers build HTML interfaces using the Basecoat CSS framework.
 
 ## Features
 
@@ -226,12 +235,10 @@ MIT License - see LICENSE file for details.
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/sorbh/basecoat-ui-mcp/issues)
-- **Documentation**: See the `/documentation` directory for technical specifications
-- **Discussions**: [GitHub Discussions](https://github.com/sorbh/basecoat-ui-mcp/discussions)
 
 
 ---
 
 <p align="center">
-Built by Claude Code - Monitored & Prompted by Saurabh K. Sharma
+Built with ❤️ by Claude Code - Monitored & Prompted by Saurabh K. Sharma
 </p>
