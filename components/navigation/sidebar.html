@@ -1,0 +1,29 @@
+<!-- Sidebar Navigation Structure -->
+<aside class="sidebar" data-side="left" aria-hidden="true" id="main-sidebar">
+  <nav>
+    <section class="scrollbar">
+      <div class="p-4">
+        <h3 class="font-medium mb-4">Navigation</h3>
+        <ul class="space-y-2">
+          <li><a href="/dashboard" class="block p-2 rounded hover:bg-muted">Dashboard</a></li>
+          <li><a href="/photos" class="block p-2 rounded hover:bg-muted">Photos</a></li>
+        </ul>
+        
+        <!-- Nested menu with accordion -->
+        <details class="mt-4">
+          <summary class="p-2 cursor-pointer hover:bg-muted rounded">Settings</summary>
+          <ul class="ml-4 mt-2 space-y-1">
+            <li><a href="/settings/profile" class="block p-2 rounded hover:bg-muted text-sm">Profile</a></li>
+            <li><a href="/settings/account" class="block p-2 rounded hover:bg-muted text-sm">Account</a></li>
+          </ul>
+        </details>
+      </div>
+    </section>
+  </nav>
+</aside>
+
+<!-- Toggle Button -->
+<button onclick="document.dispatchEvent(new CustomEvent('basecoat:sidebar', { detail: { id: 'main-sidebar', action: 'toggle' } }))" 
+        class="btn-icon">
+  <span class="material-symbols-outlined">menu</span>
+</button>

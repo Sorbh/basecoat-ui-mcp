@@ -1,0 +1,21 @@
+<!-- Searchable Select with Autocomplete -->
+<div class="select">
+  <button type="button" class="flex items-center justify-between w-full p-2 border rounded">
+    <span>Select framework...</span>
+    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
+    <header class="p-2 border-b">
+      <input type="text" class="input w-full" placeholder="Search frameworks...">
+    </header>
+    <div role="listbox" class="max-h-48 overflow-y-auto">
+      <div role="option" data-value="react" class="p-2 hover:bg-muted cursor-pointer">React</div>
+      <div role="option" data-value="vue" class="p-2 hover:bg-muted cursor-pointer">Vue</div>
+      <div role="option" data-value="angular" class="p-2 hover:bg-muted cursor-pointer">Angular</div>
+      <div role="option" data-value="svelte" class="p-2 hover:bg-muted cursor-pointer">Svelte</div>
+    </div>
+  </div>
+  <input type="hidden" name="selected-framework">
+</div>

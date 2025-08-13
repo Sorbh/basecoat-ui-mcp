@@ -1,0 +1,14 @@
+<dialog class="dialog" id="alert-dialog-id" 
+  aria-labelledby="alert-title-id" 
+  aria-describedby="alert-description-id">
+  <article>
+    <header>
+      <h2 id="alert-title-id">Confirmation Required</h2>
+      <p id="alert-description-id">Are you sure you want to perform this action?</p>
+    </header>
+    <footer>
+      <button class="btn-outline" onclick="document.getElementById('alert-dialog-id').close()">Cancel</button>
+      <button class="btn-destructive" onclick="confirmAction()">Delete</button>
+    </footer>
+  </article>
+</dialog>

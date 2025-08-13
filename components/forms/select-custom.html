@@ -1,0 +1,16 @@
+<div class="select">
+  <button type="button" class="flex items-center justify-between w-full p-2 border rounded">
+    <span>Choose option...</span>
+    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
+    <div role="listbox" class="max-h-48 overflow-y-auto">
+      <div role="option" data-value="option1" class="p-2 hover:bg-muted cursor-pointer">Option 1</div>
+      <div role="option" data-value="option2" class="p-2 hover:bg-muted cursor-pointer">Option 2</div>
+      <div role="option" data-value="option3" class="p-2 hover:bg-muted cursor-pointer">Option 3</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-value">
+</div>

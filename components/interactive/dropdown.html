@@ -1,0 +1,35 @@
+<!-- Context Menu with Various Item Types -->
+<div class="dropdown-menu">
+  <button type="button" aria-haspopup="menu" class="btn-outline">
+    Options
+    <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  <div popover class="border rounded bg-background shadow-lg p-1">
+    <div role="menu" class="min-w-48">
+      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
+        <span class="material-symbols-outlined mr-2">edit</span>
+        Edit
+      </div>
+      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
+        <span class="material-symbols-outlined mr-2">content_copy</span>
+        Copy
+      </div>
+      <hr class="my-1">
+      <div role="menuitemcheckbox" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
+        <input type="checkbox" class="mr-2" checked>
+        Show toolbar
+      </div>
+      <div role="menuitemradio" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
+        <input type="radio" name="view" class="mr-2" checked>
+        Grid view
+      </div>
+      <hr class="my-1">
+      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer text-destructive">
+        <span class="material-symbols-outlined mr-2">delete</span>
+        Delete
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+{
+  "name": "basecoat-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Basecoat UI components - provides HTML components and usage examples",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "mcp",
+    "basecoat",
+    "ui",
+    "components",
+    "html",
+    "css",
+    "framework"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": {
+    "basecoat-ui/mcp": "./server.js"
+  },
+  "mcp": {
+    "server": {
+      "name": "basecoat-ui/mcp",
+      "description": "Basecoat UI component library MCP server",
+      "version": "1.0.0"
+    }
+  }
+}

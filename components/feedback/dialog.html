@@ -1,0 +1,44 @@
+<!-- Alert Dialog Structure -->
+<dialog class="dialog" id="alert-dialog-id" 
+  aria-labelledby="alert-title-id" 
+  aria-describedby="alert-description-id">
+  <article>
+    <header>
+      <h2 id="alert-title-id">Confirmation Required</h2>
+      <p id="alert-description-id">Are you sure you want to perform this action?</p>
+    </header>
+    <footer>
+      <button class="btn-outline" onclick="document.getElementById('alert-dialog-id').close()">Cancel</button>
+      <button class="btn-destructive" onclick="confirmAction()">Delete</button>
+    </footer>
+  </article>
+</dialog>
+
+<!-- Modal Dialog -->
+<dialog id="example-dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+  <article>
+    <header>
+      <h2 id="dialog-title">Edit Profile</h2>
+      <p id="dialog-description">Update your profile information</p>
+      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </header>
+    <section>
+      <form class="form grid gap-4">
+        <div class="grid gap-2">
+          <label for="name" class="label">Name</label>
+          <input type="text" id="name" class="input" placeholder="Enter name">
+        </div>
+        <div class="grid gap-2">
+          <label for="email" class="label">Email</label>
+          <input type="email" id="email" class="input" placeholder="Enter email">
+        </div>
+      </form>
+    </section>
+    <footer>
+      <button onclick="this.closest('dialog').close()" class="btn-outline">Cancel</button>
+      <button class="btn">Save Changes</button>
+    </footer>
+  </article>
+</dialog>

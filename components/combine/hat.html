@@ -1,0 +1,52 @@
+<div class="card">
+    <section class="space-y-6">
+        <header class="flex items-center gap-2">
+            <img src="/assets/images/avatar-1.png" alt="Sofia Davis" class="w-10 h-10 rounded-full">
+            <div class="flex flex-col gap-1 mr-auto">
+                <h3 class="text-sm font-medium leading-none">Sofia Davis</h3>
+                <p class="text-sm text-muted-foreground">m@example.com</p>
+            </div>
+            <button type="button" class="btn-icon-outline rounded-full" data-tooltip="New message">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+            </button>
+        </header>
+        <section class="space-y-4">
+            <div class="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm bg-muted">
+                Hi, how can I help you today?
+            </div>
+            <div
+                class="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ml-auto bg-primary text-primary-foreground">
+                Hey, I'm having trouble with my account.
+            </div>
+            <div class="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm bg-muted">
+                What seems to be the problem?
+            </div>
+            <div
+                class="flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm ml-auto bg-primary text-primary-foreground">
+                I can't log in.
+            </div>
+        </section>
+        <footer class="flex items-center gap-2">
+            <input type="text" class="input w-full" placeholder="Type your message here..." oninput="
+              if (this.value) {
+                this.parentElement.querySelector('button').removeAttribute('disabled');
+              } else {
+                this.parentElement.querySelector('button').setAttribute('disabled', 'true');
+              }
+            ">
+            <button type="button" class="btn-icon" disabled="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z">
+                    </path>
+                    <path d="m21.854 2.147-10.94 10.939"></path>
+                </svg>
+            </button>
+        </footer>
+    </section>
+</div>

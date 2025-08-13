@@ -1,0 +1,12 @@
+<!-- Rich Content Tooltip with Positioning -->
+<div class="popover">
+  <button type="button" popovertarget="info-popover" aria-expanded="false" class="btn-outline">
+    More Info
+  </button>
+  <div popover id="info-popover" data-popover data-side="top" data-align="center" 
+       class="max-w-sm p-4 border rounded bg-background shadow-lg" aria-hidden="true">
+    <h3 class="font-medium mb-2">Additional Information</h3>
+    <p class="text-sm text-muted-foreground mb-3">This popover contains rich content that provides additional context.</p>
+    <button onclick="document.getElementById('info-popover').hidePopover()" class="btn-sm">Got it</button>
+  </div>
+</div>
