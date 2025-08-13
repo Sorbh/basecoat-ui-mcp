@@ -31,7 +31,7 @@ A Model Context Protocol (MCP) server that provides programmatic access to [Base
 
 1.  Clone this repository:
     ```bash
-    git clone https://github.com/Sorbh/basecoat-mcp-server.git
+    git clone https://github.com/Sorbh/basecoat-ui-mcp.git
     cd basecoat-mcp-server
     ```
 2.  Install dependencies:
