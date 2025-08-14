@@ -102,42 +102,15 @@ For local development or if you want to modify the server:
 
 ## Available Tools
 
-### `get_component`
-Get HTML code for a specific component variant.
-```
-Parameters:
-- name: Component name (e.g., "button-primary", "card-basic", "input-with-label")
-```
-
-### `list_components`
-List all available components organized by category.
-
-### `get_usage`
-Get comprehensive usage documentation for a component.
-```
-Parameters:
-- component: Base component name (e.g., "button", "card", "input")
-```
-
-### `get_setup`
-Get Basecoat CSS setup code with CDN links.
-
-### `get_theme_script`
-Get theme switcher script for dark/light mode functionality.
-
-### `search_components`
-Search for components by name or category.
-```
-Parameters:
-- query: Search term (e.g., "button", "form", "navigation")
-```
-
-### `get_category`
-Get all components in a specific category.
-```
-Parameters:
-- category: Category name (forms, navigation, feedback, interactive, layout)
-```
+| Tool | Description | Parameters |
+|------|-------------|------------|
+| `get_component` | Get HTML code for a specific component variant | `name`: Component name (e.g., "button-primary", "card-basic") |
+| `list_components` | List all available components organized by category | None |
+| `get_usage` | Get comprehensive usage documentation for a component | `component`: Base component name (e.g., "button", "card") |
+| `get_setup` | Get Basecoat CSS setup code with CDN links | None |
+| `get_theme_script` | Get theme switcher script for dark/light mode | None |
+| `search_components` | Search for components by name or category | `query`: Search term (e.g., "button", "form", "navigation") |
+| `get_category` | Get all components in a specific category | `category`: Category name (forms, navigation, feedback, interactive, layout) |
 
 ## Component Categories
 
