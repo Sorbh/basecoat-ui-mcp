@@ -1,6 +1,6 @@
 {
   "name": "basecoat-ui-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Basecoat UI components - provides HTML components and usage examples",
   "main": "server.js",
   "type": "module",
