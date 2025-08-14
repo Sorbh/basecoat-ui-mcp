@@ -149,46 +149,6 @@ For local development or if you want to modify the server:
 - **Table**: responsive data display
 - **Pagination**: navigation for large datasets
 
-## Usage Examples
-
-### Get a Primary Button
-```
-Use tool: get_component
-Parameters: {"name": "button-primary"}
-```
-
-Returns:
-```html
-<button class="btn">Primary Action</button>
-```
-
-### Get Button Documentation
-```
-Use tool: get_usage  
-Parameters: {"component": "button"}
-```
-
-Returns comprehensive documentation with implementation examples, accessibility guidelines, and best practices.
-
-### Search for Form Components
-```
-Use tool: search_components
-Parameters: {"query": "form"}
-```
-
-Returns all components related to forms.
-
-### Get Setup Code
-```
-Use tool: get_setup
-```
-
-Returns:
-```html
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/basecoat.cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/all.min.js" defer></script>
-```
 
 ## Directory Structure
 
