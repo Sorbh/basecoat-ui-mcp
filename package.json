@@ -1,5 +1,5 @@
 {
-  "name": "@basecoat-ui/mcp",
+  "name": "basecoat-ui-mcp",
   "version": "1.0.0",
   "description": "MCP server for Basecoat UI components - provides HTML components and usage examples",
   "main": "server.js",
@@ -29,11 +29,11 @@
     "node": ">=18.0.0"
   },
   "bin": {
-    "@basecoat-ui/mcp": "./server.js"
+    "basecoat-ui-mcp": "./server.js"
   },
   "mcp": {
     "server": {
-      "name": "@basecoat-ui/mcp",
+      "name": "basecoat-ui-mcp",
       "description": "Basecoat UI component library MCP server",
       "version": "1.0.0"
     }

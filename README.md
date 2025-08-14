@@ -56,7 +56,7 @@ Update your `claude_desktop_config.json`:
   "mcpServers": {
     "basecoat-ui": {
       "command": "npx",
-      "args": ["-y","@basecoat-ui/mcp"]
+      "args": ["-y","basecoat-ui-mcp"]
     }
   }
 }
@@ -65,7 +65,7 @@ Update your `claude_desktop_config.json`:
 ### Other MCP Clients
 Configure the server to run:
 ```bash
-npx @basecoat-ui/mcp
+npx basecoat-ui-mcp
 ```
 
 ## Available Tools
