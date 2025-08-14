@@ -1,5 +1,5 @@
 {
-  "name": "basecoat-mcp-server",
+  "name": "@basecoat-ui/mcp",
   "version": "1.0.0",
   "description": "MCP server for Basecoat UI components - provides HTML components and usage examples",
   "main": "server.js",
@@ -15,9 +15,12 @@
     "components",
     "html",
     "css",
-    "framework"
+    "framework",
+    "shadcn",
+    "model-context-protocol",
+    "claude"
   ],
-  "author": "Your Name",
+  "author": "Saurabh K. Sharma",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.4.0"
@@ -26,13 +29,21 @@
     "node": ">=18.0.0"
   },
   "bin": {
-    "basecoat-ui/mcp": "./server.js"
+    "@basecoat-ui/mcp": "./server.js"
   },
   "mcp": {
     "server": {
-      "name": "basecoat-ui/mcp",
+      "name": "@basecoat-ui/mcp",
       "description": "Basecoat UI component library MCP server",
       "version": "1.0.0"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sorbh/basecoat-ui-mcp.git"
+  },
+  "homepage": "https://github.com/Sorbh/basecoat-ui-mcp",
+  "bugs": {
+    "url": "https://github.com/Sorbh/basecoat-ui-mcp/issues"
   }
 }

@@ -1,0 +1,51 @@
+# Development files
+.git
+.gitignore
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Documentation (keep README.md)
+docs/
+.github/
+
+# Environment files
+.env*
+
+# Build artifacts
+build/
+dist/
+*.tgz
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+.nyc_output
+
+# Dependency directories (will be installed by npm)
+node_modules/
+
+# Optional files
+TODO.md
+CHANGELOG.md
