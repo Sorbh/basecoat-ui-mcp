@@ -62,11 +62,43 @@ Update your `claude_desktop_config.json`:
 }
 ```
 
-### Other MCP Clients
+#### Other MCP Clients
 Configure the server to run:
 ```bash
 npx basecoat-ui-mcp
 ```
+
+### Using Git Clone (Local Development)
+
+For local development or if you want to modify the server:
+
+1. **Clone and setup:**
+   ```bash
+   git clone https://github.com/Sorbh/basecoat-ui-mcp.git
+   cd basecoat-ui-mcp
+   npm install
+   ```
+
+2. **Claude Desktop Configuration:**
+   ```json
+   {
+     "mcpServers": {
+       "basecoat-ui": {
+         "command": "node",
+         "args": ["/path/to/basecoat-ui-mcp/server.js"],
+         "cwd": "/path/to/basecoat-ui-mcp"
+       }
+     }
+   }
+   ```
+   
+   Replace `/path/to/basecoat-ui-mcp` with the actual path where you cloned the repository.
+
+3. **Other MCP Clients:**
+   ```bash
+   cd /path/to/basecoat-ui-mcp
+   node server.js
+   ```
 
 ## Available Tools
 
