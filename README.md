@@ -1,5 +1,6 @@
-# Basecoat MCP Server
+<img width="1536" height="1024" alt="ChatGPT Image Aug 15, 2025, 10_10_22 AM" src="https://github.com/user-attachments/assets/a530dfa5-28dc-4f6f-832e-11d21a90d063" />
 
+# Basecoat MCP Server
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg)](https://nodejs.org/en/download/releases/)
 
