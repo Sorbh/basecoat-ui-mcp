@@ -1,9 +1,21 @@
 <img width="1536" height="1024" alt="ChatGPT Image Aug 15, 2025, 10_10_22 AM" src="https://github.com/user-attachments/assets/a530dfa5-28dc-4f6f-832e-11d21a90d063" />
 
 # Basecoat MCP Server
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg)](https://nodejs.org/en/download/releases/)
+
+[![npm version](https://img.shields.io/npm/v/basecoat-ui-mcp.svg)](https://www.npmjs.com/package/basecoat-ui-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/basecoat-ui-mcp.svg)](https://www.npmjs.com/package/basecoat-ui-mcp)
 [![Basecoat](https://img.shields.io/badge/basecoat-1.0.2-black.svg)](https://basecoatui.com/)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.Sorbh%2Fbasecoat--ui--mcp-blue.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.Sorbh/basecoat-ui-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Give your AI assistant the full [Basecoat UI](https://basecoatui.com/) component library (the shadcn/ui look in plain HTML + Tailwind, no React), so it writes correct Basecoat markup instead of guessing class names.
+
+**Kept in sync with Basecoat releases.** Basecoat 1.0.2 shipped with breaking API changes; this MCP was updated to it the same day.
+
+[![Install in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=basecoat-ui&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImJhc2Vjb2F0LXVpLW1jcCJdfQ==)
+[![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=basecoat-ui&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22basecoat-ui-mcp%22%5D%7D)
+
+![Demo: asking Claude for a Basecoat login page](assets/demo.gif)
 
 ## Story
 
@@ -25,83 +37,118 @@ A Model Context Protocol (MCP) server that provides programmatic access to [Base
 - **Search & Discovery**: Find components by name or category.
 - **Accessibility Ready**: All components include ARIA attributes and semantic HTML.
 
-## Tech Stack
+## Quick Start
 
--   [Node.js](https://nodejs.org/) - JavaScript runtime environment
--   [@modelcontextprotocol/sdk](https://www.npmjs.com/package/@modelcontextprotocol/sdk) - For creating the MCP server
+No install needed: every client runs the server with `npx`.
 
-## Installation
+### Claude Code
 
-1.  Clone this repository:
-    ```bash
-    git clone https://github.com/Sorbh/basecoat-ui-mcp.git
-    cd basecoat-mcp-server
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
+```bash
+claude mcp add basecoat-ui -- npx -y basecoat-ui-mcp
+```
 
-## MCP Configuration
+### Claude Desktop
 
-You can run this server either by using `npx` (if the package is published on npm) or by cloning the repository for local development.
-
-### Using NPX (Recommended)
-
-This method is the easiest way to get started and doesn't require cloning the repository.
-
-#### Claude Desktop
-
-Update your `claude_desktop_config.json`:
+Add to `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "basecoat-ui": {
       "command": "npx",
-      "args": ["-y","basecoat-ui-mcp"]
+      "args": ["-y", "basecoat-ui-mcp"]
     }
   }
 }
 ```
 
-#### Other MCP Clients
-Configure the server to run:
-```bash
-npx basecoat-ui-mcp
+### Cursor
+
+Click **Install in Cursor** above, or add to `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "basecoat-ui": {
+      "command": "npx",
+      "args": ["-y", "basecoat-ui-mcp"]
+    }
+  }
+}
 ```
 
-### Using Git Clone (Local Development)
+### VS Code (GitHub Copilot)
 
-For local development or if you want to modify the server:
+Click **Install in VS Code** above, or add to `.vscode/mcp.json`:
 
-1. **Clone and setup:**
-   ```bash
-   git clone https://github.com/Sorbh/basecoat-ui-mcp.git
-   cd basecoat-ui-mcp
-   npm install
-   ```
+```json
+{
+  "servers": {
+    "basecoat-ui": {
+      "command": "npx",
+      "args": ["-y", "basecoat-ui-mcp"]
+    }
+  }
+}
+```
 
-2. **Claude Desktop Configuration:**
-   ```json
-   {
-     "mcpServers": {
-       "basecoat-ui": {
-         "command": "node",
-         "args": ["/path/to/basecoat-ui-mcp/server.js"],
-         "cwd": "/path/to/basecoat-ui-mcp"
-       }
-     }
-   }
-   ```
-   
-   Replace `/path/to/basecoat-ui-mcp` with the actual path where you cloned the repository.
+### Windsurf
 
-3. **Other MCP Clients:**
-   ```bash
-   cd /path/to/basecoat-ui-mcp
-   node server.js
-   ```
+Add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "basecoat-ui": {
+      "command": "npx",
+      "args": ["-y", "basecoat-ui-mcp"]
+    }
+  }
+}
+```
+
+### Codex CLI
+
+Add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.basecoat-ui]
+command = "npx"
+args = ["-y", "basecoat-ui-mcp"]
+```
+
+### Other MCP clients
+
+Run `npx -y basecoat-ui-mcp` as a stdio server.
+
+### Try it
+
+Ask your assistant something like:
+
+> Build a sign-up page with Basecoat: a card with GitHub/Google buttons, email and password fields, and a dark mode toggle.
+
+It will call `get_setup`, pull the matching components and usage docs, and return HTML that uses the real Basecoat 1.0 API.
+
+## Local Development
+
+```bash
+git clone https://github.com/Sorbh/basecoat-ui-mcp.git
+cd basecoat-ui-mcp
+npm install
+```
+
+Point your client at the local copy:
+
+```json
+{
+  "mcpServers": {
+    "basecoat-ui": {
+      "command": "node",
+      "args": ["/path/to/basecoat-ui-mcp/server.js"]
+    }
+  }
+}
+```
 
 ## Available Tools
 

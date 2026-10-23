@@ -24,6 +24,7 @@ Every component has a single **root class** (`btn`, `badge`, `alert`, `card`, `a
 ### 🔗 CDN Setup
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">@custom-variant dark (&:is(html.dark *));</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
 <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
 ```
@@ -1111,6 +1112,7 @@ Before writing custom styles, check if these Basecoat components exist:
 
   <!-- 2. Tailwind CSS (browser build) -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">@custom-variant dark (&:is(html.dark *));</style>
 
   <!-- 3. ONE Basecoat stylesheet (default or a style pack) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">

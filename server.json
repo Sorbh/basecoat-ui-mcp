@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Sorbh/basecoat-ui-mcp",
+  "title": "Basecoat UI",
+  "description": "Basecoat UI 1.0 components (shadcn/ui look in plain HTML + Tailwind) with usage docs and setup.",
+  "websiteUrl": "https://github.com/Sorbh/basecoat-ui-mcp",
+  "repository": {
+    "url": "https://github.com/Sorbh/basecoat-ui-mcp",
+    "source": "github"
+  },
+  "version": "2.0.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "basecoat-ui-mcp",
+      "version": "2.0.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
