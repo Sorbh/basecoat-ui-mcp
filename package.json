@@ -30,7 +30,7 @@
     "node": ">=18.0.0"
   },
   "bin": {
-    "basecoat-ui-mcp": "./server.js"
+    "basecoat-ui-mcp": "server.js"
   },
   "mcp": {
     "server": {
@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sorbh/basecoat-ui-mcp.git"
+    "url": "git+https://github.com/Sorbh/basecoat-ui-mcp.git"
   },
   "homepage": "https://github.com/Sorbh/basecoat-ui-mcp",
   "bugs": {
