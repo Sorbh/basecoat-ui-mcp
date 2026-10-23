@@ -49,3 +49,8 @@ node_modules/
 # Optional files
 TODO.md
 CHANGELOG.md
+# Local Claude Code settings
+.claude/
+
+# Packed tarballs
+*.tgz
