@@ -1,16 +1,15 @@
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded">
-    <span>Choose option...</span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
+<!-- Custom JavaScript Select (requires basecoat.min.js + select.min.js, or all.min.js) -->
+<div id="select-theme" class="select" data-placeholder="Theme">
+  <button type="button" class="w-[180px]" id="select-theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-theme-listbox">
+    <span class="truncate">Theme</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div role="option" data-value="option1" class="p-2 hover:bg-muted cursor-pointer">Option 1</div>
-      <div role="option" data-value="option2" class="p-2 hover:bg-muted cursor-pointer">Option 2</div>
-      <div role="option" data-value="option3" class="p-2 hover:bg-muted cursor-pointer">Option 3</div>
+  <div id="select-theme-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-theme-listbox" aria-orientation="vertical" aria-labelledby="select-theme-trigger">
+      <div role="option" data-value="light">Light</div>
+      <div role="option" data-value="dark">Dark</div>
+      <div role="option" data-value="system">System</div>
     </div>
   </div>
-  <input type="hidden" name="select-value">
+  <input type="hidden" name="theme" value="" />
 </div>

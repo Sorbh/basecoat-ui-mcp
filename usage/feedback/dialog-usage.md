@@ -1,130 +1,115 @@
 # Dialog Component Usage
 
 ## Overview
-The dialog component creates a window overlaid on the primary window or another dialog, rendering content underneath as "inert". It uses the native HTML `<dialog>` element with enhanced styling and accessibility.
+The dialog component creates a window overlaid on the primary window or another dialog, rendering content underneath as "inert". It uses the native HTML `<dialog>` element and `showModal()`, which provides native modality, focus handling, and Escape-to-close without component JavaScript.
+
+For confirmations that require an explicit choice (no close button, no backdrop dismiss), use the **alert-dialog** component (`class="alert-dialog"`).
 
 ## Key Characteristics
 - Modal overlay that blocks interaction with the background
 - Uses native `<dialog>` element for better accessibility
-- Supports keyboard navigation and focus management
+- Native keyboard and focus management (Escape closes, focus is trapped)
 - Can contain forms, content, and interactive elements
+- No Basecoat JavaScript required
 
 ## HTML Structure
 
 ### Basic Dialog Structure
 ```html
-<dialog id="dialog-id" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
-  <article>
+<dialog id="dialog-id" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description" onclick="if (event.target === this) this.close()">
+  <div>
     <header>
       <h2 id="dialog-title">Dialog Title</h2>
       <p id="dialog-description">Dialog description</p>
-      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
-        <span>✕</span>
-      </button>
     </header>
     <section>
       <!-- Dialog content -->
     </section>
     <footer>
-      <button onclick="this.closest('dialog').close()" class="btn-outline">Cancel</button>
-      <button class="btn">Confirm</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button type="button" class="btn">Confirm</button>
     </footer>
-  </article>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+  </div>
 </dialog>
 ```
 
 ## Component Elements
 
-### Dialog Container
-- `<dialog class="dialog">` - Main dialog element with modal functionality
-- `id` attribute for JavaScript control
-- `aria-labelledby` and `aria-describedby` for accessibility
-
-### Article Container
-- `<article>` - Contains all dialog content and provides proper structure
-
-### Header Section (Optional)
-- `<header>` - Contains title, description, and close button
-- `<h2>` - Dialog title (referenced by `aria-labelledby`)
-- `<p>` - Dialog description (referenced by `aria-describedby`)
-- Close button for easy dismissal
-
-### Content Section
-- `<section>` - Main content area for forms, text, or other elements
-
-### Footer Section (Optional)
-- `<footer>` - Contains action buttons (Cancel, Save, etc.)
+| Element | Required | Description |
+| --- | --- | --- |
+| `<button onclick="dialog.showModal()">` | Optional | Trigger. Uses the native `HTMLDialogElement.showModal()` method. |
+| `<dialog class="dialog" id="...">` | Yes | Native modal dialog. Add `aria-labelledby` / `aria-describedby` when title and description exist. `onclick="if (event.target === this) this.close()"` enables backdrop-click close. |
+| `<div>` | Yes | Content surface (direct child of `<dialog>`). Add width utilities such as `sm:max-w-sm` for custom sizes. |
+| `<header>` | Optional | Holds the `<h2>` title and `<p>` description. |
+| `<section>` | Optional | Body/content area. Add overflow utilities to make it scroll. |
+| `<footer>` | Optional | Action area. Stacks on small screens, aligns to the end on larger screens. |
+| `<button aria-label="Close dialog">` | Optional | Close button, placed as the last child of the inner `<div>`; positioned in the corner automatically. You can also wrap a button in `<form method="dialog">`. |
 
 ## Implementation Examples
 
 ### Basic Modal Dialog
 ```html
 <!-- Trigger Button -->
-<button onclick="document.getElementById('example-dialog').showModal()" class="btn">
+<button type="button" onclick="document.getElementById('example-dialog').showModal()" class="btn" data-variant="outline">
   Open Dialog
 </button>
 
 <!-- Dialog -->
-<dialog id="example-dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
-  <article>
+<dialog id="example-dialog" class="dialog" aria-labelledby="example-dialog-title" aria-describedby="example-dialog-description" onclick="if (event.target === this) this.close()">
+  <div class="sm:max-w-sm">
     <header>
-      <h2 id="dialog-title">Edit Profile</h2>
-      <p id="dialog-description">Update your profile information</p>
-      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
-        <span>✕</span>
-      </button>
+      <h2 id="example-dialog-title">Edit Profile</h2>
+      <p id="example-dialog-description">Update your profile information</p>
     </header>
     <section>
-      <form class="form grid gap-4">
-        <div class="grid gap-2">
-          <label for="name" class="label">Name</label>
-          <input type="text" id="name" class="input" placeholder="Enter name">
+      <form class="grid gap-4">
+        <div role="group" class="field">
+          <label for="example-dialog-name">Name</label>
+          <input type="text" id="example-dialog-name" placeholder="Enter name" autofocus />
         </div>
-        <div class="grid gap-2">
-          <label for="email" class="label">Email</label>
-          <input type="email" id="email" class="input" placeholder="Enter email">
+        <div role="group" class="field">
+          <label for="example-dialog-email">Email</label>
+          <input type="email" id="example-dialog-email" placeholder="Enter email" />
         </div>
       </form>
     </section>
     <footer>
-      <button onclick="this.closest('dialog').close()" class="btn-outline">Cancel</button>
-      <button class="btn">Save Changes</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Save Changes</button>
     </footer>
-  </article>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+  </div>
 </dialog>
 ```
 
-### Alert Dialog
+### Confirmation (use Alert Dialog)
 ```html
-<!-- Trigger Button -->
-<button onclick="document.getElementById('delete-dialog').showModal()" class="btn-destructive">
+<button type="button" onclick="document.getElementById('delete-dialog').showModal()" class="btn" data-variant="destructive">
   Delete Item
 </button>
 
-<!-- Alert Dialog -->
-<dialog class="dialog" id="delete-dialog" aria-labelledby="alert-title" aria-describedby="alert-description">
-  <article>
+<dialog id="delete-dialog" class="alert-dialog" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-description">
+  <div>
     <header>
-      <h2 id="alert-title">Confirm Deletion</h2>
-      <p id="alert-description">Are you sure you want to delete this item? This action cannot be undone.</p>
+      <h2 id="delete-dialog-title">Confirm Deletion</h2>
+      <p id="delete-dialog-description">Are you sure you want to delete this item? This action cannot be undone.</p>
     </header>
     <footer>
-      <button class="btn-outline" onclick="document.getElementById('delete-dialog').close()">Cancel</button>
-      <button class="btn-destructive" onclick="confirmDelete()">Delete</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button type="button" class="btn" data-variant="destructive" onclick="confirmDelete()">Delete</button>
     </footer>
-  </article>
+  </div>
 </dialog>
 ```
+See `alert-dialog` usage for full details.
 
 ### Simple Content Dialog
 ```html
-<dialog id="info-dialog" class="dialog" aria-labelledby="info-title">
-  <article>
+<dialog id="info-dialog" class="dialog" aria-labelledby="info-dialog-title" onclick="if (event.target === this) this.close()">
+  <div>
     <header>
-      <h2 id="info-title">About This Feature</h2>
-      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
-        <span>✕</span>
-      </button>
+      <h2 id="info-dialog-title">About This Feature</h2>
     </header>
     <section>
       <p>This feature allows you to manage your account settings and preferences.</p>
@@ -135,43 +120,59 @@ The dialog component creates a window overlaid on the primary window or another 
       </ul>
     </section>
     <footer>
-      <button onclick="this.closest('dialog').close()" class="btn">Got it</button>
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Got it</button>
     </footer>
-  </article>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+  </div>
 </dialog>
 ```
 
 ### Form Dialog with Validation
 ```html
-<dialog id="signup-dialog" class="dialog" aria-labelledby="signup-title">
-  <article>
+<dialog id="signup-dialog" class="dialog" aria-labelledby="signup-title" onclick="if (event.target === this) this.close()">
+  <div class="sm:max-w-md">
     <header>
       <h2 id="signup-title">Create Account</h2>
-      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
-        <span>✕</span>
-      </button>
     </header>
     <section>
-      <form id="signup-form" class="form grid gap-4">
-        <div class="grid gap-2">
-          <label for="username" class="label">Username</label>
-          <input type="text" id="username" class="input" required>
+      <form id="signup-form" class="grid gap-4">
+        <div role="group" class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" required />
         </div>
-        <div class="grid gap-2">
-          <label for="signup-email" class="label">Email</label>
-          <input type="email" id="signup-email" class="input" required>
+        <div role="group" class="field">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required />
         </div>
-        <div class="grid gap-2">
-          <label for="signup-password" class="label">Password</label>
-          <input type="password" id="signup-password" class="input" required>
+        <div role="group" class="field">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required />
         </div>
       </form>
     </section>
     <footer>
-      <button onclick="this.closest('dialog').close()" class="btn-outline">Cancel</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
       <button type="submit" form="signup-form" class="btn">Create Account</button>
     </footer>
-  </article>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+  </div>
+</dialog>
+```
+
+### Scrollable Content / Sticky Footer
+```html
+<dialog id="terms-dialog" class="dialog" aria-labelledby="terms-dialog-title" onclick="if (event.target === this) this.close()">
+  <div>
+    <header>
+      <h2 id="terms-dialog-title">Terms of Service</h2>
+    </header>
+    <section class="-mx-4 max-h-[50vh] overflow-y-auto px-4 scrollbar">
+      <p class="mb-4 leading-normal">Long content...</p>
+    </section>
+    <footer>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Close</button>
+    </footer>
+  </div>
 </dialog>
 ```
 
@@ -202,12 +203,13 @@ document.getElementById('dialog-id').close();
 document.getElementById('dialog-id').close('cancelled');
 
 // Close from within dialog
-function closeDialog(dialog) {
-  dialog.closest('dialog').close();
+function closeDialog(el) {
+  el.closest('dialog').close();
 }
 ```
 
 ### Dialog Event Handling
+These are native `<dialog>` events (Basecoat adds no custom dialog events).
 ```javascript
 const dialog = document.getElementById('my-dialog');
 
@@ -216,16 +218,16 @@ dialog.addEventListener('close', function() {
   console.log('Dialog closed with return value:', dialog.returnValue);
 });
 
-// Listen for backdrop click
+// Close on backdrop click (same as the inline onclick attribute)
 dialog.addEventListener('click', function(e) {
   if (e.target === dialog) {
-    dialog.close(); // Close on backdrop click
+    dialog.close();
   }
 });
 
-// Prevent backdrop close
-dialog.addEventListener('click', function(e) {
-  e.stopPropagation();
+// Prevent Escape from closing
+dialog.addEventListener('cancel', function(e) {
+  e.preventDefault();
 });
 ```
 
@@ -233,23 +235,17 @@ dialog.addEventListener('click', function(e) {
 ```javascript
 function handleFormSubmit(form) {
   const formData = new FormData(form);
-  
-  // Process form data
   console.log('Form data:', Object.fromEntries(formData));
-  
+
   // Close dialog after successful submission
   form.closest('dialog').close('submitted');
 }
 
-// Example with validation
 document.getElementById('signup-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  
+
   if (this.checkValidity()) {
     handleFormSubmit(this);
-  } else {
-    // Show validation errors
-    console.log('Form validation failed');
   }
 });
 ```
@@ -257,114 +253,89 @@ document.getElementById('signup-form').addEventListener('submit', function(e) {
 ## Accessibility Guidelines
 
 ### ARIA Attributes
+`showModal()` already exposes the dialog as modal, so `aria-modal` is not needed.
 ```html
-<dialog class="dialog" 
+<dialog class="dialog"
         id="accessible-dialog"
-        aria-labelledby="dialog-title"
-        aria-describedby="dialog-description"
-        aria-modal="true">
-  <article>
+        aria-labelledby="accessible-dialog-title"
+        aria-describedby="accessible-dialog-description">
+  <div>
     <header>
-      <h2 id="dialog-title">Accessible Dialog</h2>
-      <p id="dialog-description">This dialog follows accessibility best practices</p>
+      <h2 id="accessible-dialog-title">Accessible Dialog</h2>
+      <p id="accessible-dialog-description">This dialog follows accessibility best practices</p>
     </header>
     <!-- content -->
-  </article>
+  </div>
 </dialog>
 ```
 
 ### Focus Management
-```javascript
-function openDialog(dialogId) {
-  const dialog = document.getElementById(dialogId);
-  dialog.showModal();
-  
-  // Focus the first focusable element
-  const firstFocusable = dialog.querySelector('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-  if (firstFocusable) {
-    firstFocusable.focus();
-  }
-}
+`showModal()` moves focus into the dialog and traps it. Use the `autofocus` attribute to choose the initially focused control:
+```html
+<input type="text" id="example-dialog-name" autofocus />
 ```
+Focus returns to the previously focused element when the dialog closes.
 
 ### Keyboard Navigation
-```javascript
-dialog.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    dialog.close();
-  }
-  
-  // Tab trapping
-  if (e.key === 'Tab') {
-    const focusable = dialog.querySelectorAll('button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-});
-```
+- **Escape**: Closes the dialog (fires the native `cancel` event)
+- **Tab / Shift+Tab**: Cycles focus within the dialog
 
 ## Best Practices
 
 ### User Experience
-- Always provide a close button for better usability
+- Provide a close button or a Cancel action
 - Use clear, descriptive titles and descriptions
 - Keep dialog content focused and concise
 - Provide clear action buttons with appropriate labels
 
 ### Accessibility
-- Use proper ARIA attributes for screen readers
-- Implement focus management and keyboard navigation
+- Reference the title and description with `aria-labelledby` / `aria-describedby`
+- Give icon-only close buttons an `aria-label`
 - Ensure adequate color contrast for all text
-- Provide alternative ways to close the dialog
 
 ### Performance
 - Load dialog content lazily when possible
-- Clean up event listeners when dialogs are destroyed
-- Use CSS animations for smooth transitions
 - Avoid nesting dialogs unless absolutely necessary
 
 ### Content Guidelines
 - Use sentence case for titles and buttons
 - Keep button labels action-oriented and specific
-- Provide helpful descriptions for complex dialogs
 - Group related form fields logically
 
 ## Dialog Variations
 
-### Confirmation Dialog
+### No Close Button
 ```html
-<dialog class="dialog" id="confirm-dialog">
-  <article>
+<dialog class="dialog" id="notice-dialog" aria-labelledby="notice-dialog-title" onclick="if (event.target === this) this.close()">
+  <div>
     <header>
-      <h2>Confirm Action</h2>
-    </header>
-    <section>
+      <h2 id="notice-dialog-title">Confirm Action</h2>
       <p>Are you sure you want to proceed with this action?</p>
-    </section>
+    </header>
     <footer>
-      <button class="btn-outline" onclick="this.closest('dialog').close('no')">No</button>
-      <button class="btn" onclick="this.closest('dialog').close('yes')">Yes</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close('no')">No</button>
+      <button type="button" class="btn" onclick="this.closest('dialog').close('yes')">Yes</button>
     </footer>
-  </article>
+  </div>
 </dialog>
 ```
 
 ### Loading Dialog
 ```html
-<dialog class="dialog" id="loading-dialog">
-  <article>
-    <section class="text-center py-8">
-      <div class="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+<dialog class="dialog" id="loading-dialog" aria-label="Processing">
+  <div>
+    <section class="flex flex-col items-center gap-4 py-8">
+      <svg aria-label="Loading" role="status" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
       <p>Processing your request...</p>
     </section>
-  </article>
+  </div>
 </dialog>
 ```
+
+## Migrating from 0.x
+- The inner `<article>` wrapper is now a plain `<div>`.
+- Button classes changed: `btn-outline` becomes `class="btn" data-variant="outline"`, `btn-destructive` becomes `class="btn" data-variant="destructive"`, `btn-icon` becomes `class="btn" data-size="icon"` (the close button uses `data-variant="ghost" data-size="icon-sm"`).
+- The close button is no longer positioned with `absolute top-4 right-4`; place it last inside the inner `<div>`.
+- The `.form` wrapper is gone: wrap each control in `<div role="group" class="field">`.
+- Confirmation dialogs should use `class="alert-dialog"`.
+- To keep old button classes working during migration, load `@import "basecoat-css/compat";` after Basecoat.

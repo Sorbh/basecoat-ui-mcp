@@ -1,0 +1,15 @@
+<!-- Alert Dialog: modal confirmation with no close button or backdrop-click handler -->
+<button type="button" onclick="document.getElementById('alert-dialog-delete').showModal()" class="btn" data-variant="destructive">Delete Account</button>
+<dialog id="alert-dialog-delete" class="alert-dialog" aria-labelledby="alert-dialog-delete-title" aria-describedby="alert-dialog-delete-description">
+  <div>
+    <header>
+      <figure><svg class="lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6" /><path d="M14 11v6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg></figure>
+      <h2 id="alert-dialog-delete-title">Are you absolutely sure?</h2>
+      <p id="alert-dialog-delete-description">This action cannot be undone. This will permanently delete your account and remove your data from our servers.</p>
+    </header>
+    <footer>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button type="button" class="btn" data-variant="destructive" onclick="this.closest('dialog').close('confirm')">Delete</button>
+    </footer>
+  </div>
+</dialog>

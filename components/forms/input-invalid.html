@@ -1,1 +1,6 @@
-<input class="input" type="email" aria-invalid="true" placeholder="Email">
+<!-- Invalid Input (data-invalid on the field, aria-invalid on the control) -->
+<div role="group" class="field" data-invalid>
+  <label for="invalid-email">Email</label>
+  <input id="invalid-email" type="email" value="wrong-email" aria-invalid="true" aria-describedby="invalid-email-error" />
+  <p id="invalid-email-error" role="alert">Enter a valid email address.</p>
+</div>

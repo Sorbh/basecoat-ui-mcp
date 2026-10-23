@@ -1,59 +1,97 @@
 # Toast Component Usage
 
 ## Overview
-The toast component displays temporary notification messages to users. It supports different types (success, info, warning, error) and automatically dismisses after a set duration.
+The toast component displays temporary notification messages to users. It supports categories (success, info, warning, error), optional actions, and automatically dismisses after a set duration. Toasts are appended to a single toaster container and created either from server-rendered markup or from JavaScript with `toaster.toast(config)`.
 
 ## JavaScript Requirements
 
 ### Required Scripts
 ```html
 <!-- Include Basecoat CSS and JavaScript -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/basecoat.cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/toast.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/toast.min.js" defer></script>
+
+<!-- Or load every component script at once -->
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
 ```
 
 ## HTML Structure
 
-### Toast Container
+### Toaster Container
+Add one toaster near the end of your page `<body>`. Basecoat positions it; no positioning utilities are needed.
 ```html
-<!-- Toast container - place once in your document -->
-<div id="toaster" class="toaster fixed bottom-4 right-4 z-50" data-align="end"></div>
+<div id="toaster" class="toaster"></div>
 ```
 
-### Toast Container Positions
+### Toaster Alignment
+Use `data-align` to change placement:
 ```html
-<!-- Bottom right (default) -->
-<div id="toaster" class="toaster fixed bottom-4 right-4 z-50" data-align="end"></div>
+<!-- End (default) -->
+<div id="toaster" class="toaster" data-align="end"></div>
 
-<!-- Bottom left -->
-<div id="toaster" class="toaster fixed bottom-4 left-4 z-50" data-align="start"></div>
+<!-- Start -->
+<div id="toaster" class="toaster" data-align="start"></div>
 
-<!-- Top right -->
-<div id="toaster" class="toaster fixed top-4 right-4 z-50" data-align="end"></div>
-
-<!-- Top left -->
-<div id="toaster" class="toaster fixed top-4 left-4 z-50" data-align="start"></div>
-
-<!-- Top center -->
-<div id="toaster" class="toaster fixed top-4 left-1/2 transform -translate-x-1/2 z-50" data-align="center"></div>
+<!-- Center -->
+<div id="toaster" class="toaster" data-align="center"></div>
 ```
+
+### Server-rendered Toast Markup
+Append this markup to the toaster (for example with HTMX `hx-target="#toaster" hx-swap="beforeend"`):
+```html
+<div id="toaster" class="toaster">
+  <div class="toast" role="status" aria-atomic="true" aria-hidden="false" data-category="success">
+    <div class="toast-content"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
+      <section>
+        <h2>Success</h2>
+        <p>Your changes have been saved.</p>
+      </section>
+      <footer>
+        <button type="button" class="btn" data-toast-action>Dismiss</button>
+      </footer>
+    </div>
+  </div>
+</div>
+```
+
+| Element | Description |
+| --- | --- |
+| `<div id="toaster" class="toaster">` | Toast container. Optional `data-align="start|center|end"`. |
+| `<div class="toast">` | Toast item. `data-category="success|info|warning|error"` for styling; `data-duration` (ms) to override the timeout; `data-duration="-1"` keeps it open. |
+| `<div class="toast-content">` | Content wrapper. |
+| `<svg aria-hidden="true">` | Optional icon. |
+| `<section>` | Message region with `<h2>` title and optional `<p>` description. |
+| `<footer>` | Optional action buttons or links. Clicking one closes the toast. |
 
 ## JavaScript API
 
+| API | Type | Description |
+| --- | --- | --- |
+| `toaster.toast(config)` | Method | Creates a toast from a config object and returns the inserted `.toast` element. |
+| `toaster.closeAll()` | Method | Closes every toast inside the toaster. |
+| `toast.close()` | Method | Closes one initialized toast element. |
+
+### Config Object
+
+| Field | Required | Description |
+| --- | --- | --- |
+| `title` | Yes | The title of the toast. |
+| `description` | Optional | The description of the toast. |
+| `category` | Optional | `success`, `info`, `warning`, or `error`. |
+| `duration` | Optional | Timeout in ms. Defaults to `3000` (`5000` for errors). Use `-1` to keep it open. |
+| `action` | Optional | Primary action: `{ label, href }` or `{ label, onclick }`. |
+| `cancel` | Optional | Secondary action: `{ label, onclick? }`. |
+
 ### Basic Toast Function
 ```javascript
-function showToast(category, title, description, duration = 5000) {
-  document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: category, // success, info, warning, error
-        title: title,
-        description: description,
-        duration: duration // milliseconds
-      }
-    }
-  }));
+function showToast(category, title, description, duration) {
+  return document.getElementById('toaster').toast({
+    category, // success, info, warning, error
+    title,
+    description,
+    duration  // milliseconds (optional)
+  });
 }
 ```
 
@@ -86,180 +124,171 @@ showToast('info', 'Info', 'New features are now available in settings.');
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/basecoat.cdn.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/basecoat.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/toast.min.js" defer></script>
 </head>
 <body>
-  <!-- Toast container -->
-  <div id="toaster" class="toaster fixed bottom-4 right-4 z-50" data-align="end"></div>
-  
   <!-- Trigger buttons -->
-  <button class="btn" onclick="showSuccessToast()">Show Success</button>
-  <button class="btn-destructive" onclick="showErrorToast()">Show Error</button>
+  <button type="button" class="btn" onclick="showSuccessToast()">Show Success</button>
+  <button type="button" class="btn" data-variant="destructive" onclick="showErrorToast()">Show Error</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/toast.min.js" defer></script>
+  <!-- Toaster container -->
+  <div id="toaster" class="toaster"></div>
+
   <script>
     function showSuccessToast() {
-      document.dispatchEvent(new CustomEvent('basecoat:toast', {
-        detail: {
-          config: {
-            category: 'success',
-            title: 'Success!',
-            description: 'Your changes have been saved.',
-            duration: 5000
-          }
-        }
-      }));
+      document.getElementById('toaster').toast({
+        category: 'success',
+        title: 'Success!',
+        description: 'Your changes have been saved.',
+        cancel: { label: 'Dismiss' }
+      });
     }
 
     function showErrorToast() {
-      document.dispatchEvent(new CustomEvent('basecoat:toast', {
-        detail: {
-          config: {
-            category: 'error',
-            title: 'Error!',
-            description: 'Failed to save changes.',
-            duration: 5000
-          }
-        }
-      }));
+      document.getElementById('toaster').toast({
+        category: 'error',
+        title: 'Error!',
+        description: 'Failed to save changes.',
+        action: { label: 'Retry', onclick: () => saveChanges() }
+      });
     }
   </script>
 </body>
 </html>
 ```
 
+### Inline Trigger
+```html
+<button
+  type="button"
+  class="btn" data-variant="outline"
+  onclick="document.getElementById('toaster').toast({
+    category: 'success',
+    title: 'Success',
+    description: 'A success toast called from the front-end.',
+    cancel: { label: 'Dismiss' }
+  })">Toast from front-end</button>
+```
+
 ### Form Submission with Toast
 ```html
-<form id="contact-form" class="form grid gap-4">
-  <div class="grid gap-2">
-    <label for="name" class="label">Name</label>
-    <input type="text" id="name" class="input" required>
+<form id="contact-form" class="grid gap-4">
+  <div role="group" class="field">
+    <label for="contact-name">Name</label>
+    <input type="text" id="contact-name" name="name" required />
   </div>
-  <div class="grid gap-2">
-    <label for="email" class="label">Email</label>
-    <input type="email" id="email" class="input" required>
+  <div role="group" class="field">
+    <label for="contact-email">Email</label>
+    <input type="email" id="contact-email" name="email" required />
   </div>
   <button type="submit" class="btn">Submit</button>
 </form>
 
-<div id="toaster" class="toaster fixed bottom-4 right-4 z-50" data-align="end"></div>
+<div id="toaster" class="toaster"></div>
 
 <script>
+const toaster = document.getElementById('toaster');
+
 document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-  
+
+  // Show a persistent "processing" toast and keep a reference to it
+  const pending = toaster.toast({
+    category: 'info',
+    title: 'Processing...',
+    description: 'Submitting your form.',
+    duration: -1
+  });
+
   try {
-    // Simulate form submission
     const formData = new FormData(this);
-    
-    // Show loading toast (optional)
-    showToast('info', 'Processing...', 'Submitting your form.');
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Show success toast
-    showToast('success', 'Form Submitted!', 'Thank you for your message.');
-    
-    // Reset form
+    await new Promise(resolve => setTimeout(resolve, 2000)); // simulate API call
+
+    pending.close();
+    toaster.toast({ category: 'success', title: 'Form Submitted!', description: 'Thank you for your message.' });
     this.reset();
-    
   } catch (error) {
-    // Show error toast
-    showToast('error', 'Submission Failed', 'Please try again later.');
+    pending.close();
+    toaster.toast({ category: 'error', title: 'Submission Failed', description: 'Please try again later.' });
   }
 });
-
-function showToast(category, title, description) {
-  document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: category,
-        title: title,
-        description: description,
-        duration: 5000
-      }
-    }
-  }));
-}
 </script>
 ```
 
 ### Advanced Toast Configuration
 ```javascript
+const toaster = document.getElementById('toaster');
+
 // Toast with custom duration
 function showCustomToast() {
-  document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: 'warning',
-        title: 'Session Expiring',
-        description: 'Your session will expire in 2 minutes.',
-        duration: 10000 // 10 seconds
-      }
-    }
-  }));
+  toaster.toast({
+    category: 'warning',
+    title: 'Session Expiring',
+    description: 'Your session will expire in 2 minutes.',
+    duration: 10000, // 10 seconds
+    action: { label: 'Stay signed in', onclick: () => refreshSession() }
+  });
 }
 
-// Persistent toast (long duration)
+// Persistent toast (stays until dismissed)
 function showPersistentToast() {
-  document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: 'info',
-        title: 'System Maintenance',
-        description: 'Scheduled maintenance tonight at 2 AM.',
-        duration: 30000 // 30 seconds
-      }
-    }
-  }));
+  toaster.toast({
+    category: 'info',
+    title: 'System Maintenance',
+    description: 'Scheduled maintenance tonight at 2 AM.',
+    duration: -1,
+    action: { label: 'Details', href: '/status' },
+    cancel: { label: 'Dismiss' }
+  });
 }
 
 // Quick toast (short duration)
 function showQuickToast() {
-  document.dispatchEvent(new CustomEvent('basecoat:toast', {
-    detail: {
-      config: {
-        category: 'success',
-        title: 'Copied!',
-        description: 'Text copied to clipboard.',
-        duration: 2000 // 2 seconds
-      }
-    }
-  }));
+  toaster.toast({
+    category: 'success',
+    title: 'Copied!',
+    description: 'Text copied to clipboard.',
+    duration: 2000 // 2 seconds
+  });
+}
+
+// Close everything
+function clearToasts() {
+  toaster.closeAll();
 }
 ```
 
 ### Toast Utility Class
 ```javascript
 class ToastManager {
-  static show(category, title, description, duration = 5000) {
-    document.dispatchEvent(new CustomEvent('basecoat:toast', {
-      detail: {
-        config: {
-          category,
-          title,
-          description,
-          duration
-        }
-      }
-    }));
+  static get toaster() {
+    return document.getElementById('toaster');
+  }
+
+  static show(category, title, description, duration) {
+    return this.toaster.toast({ category, title, description, duration });
   }
 
   static success(title, description) {
-    this.show('success', title, description);
+    return this.show('success', title, description);
   }
 
   static error(title, description) {
-    this.show('error', title, description);
+    return this.show('error', title, description);
   }
 
   static warning(title, description) {
-    this.show('warning', title, description);
+    return this.show('warning', title, description);
   }
 
   static info(title, description) {
-    this.show('info', title, description);
+    return this.show('info', title, description);
+  }
+
+  static clear() {
+    this.toaster.closeAll();
   }
 }
 
@@ -274,26 +303,22 @@ ToastManager.info('Info', 'New update available.');
 
 ### Success Toast
 - **Use for**: Successful operations, confirmations, completions
-- **Color**: Green theme
-- **Icon**: Checkmark or success icon
+- **Markup**: `category: 'success'` / `data-category="success"`
 - **Examples**: "Saved successfully", "Account created", "Email sent"
 
 ### Error Toast
 - **Use for**: Failed operations, validation errors, system errors
-- **Color**: Red theme
-- **Icon**: Error or warning icon
+- **Markup**: `category: 'error'` / `data-category="error"` (default duration 5000 ms)
 - **Examples**: "Save failed", "Network error", "Invalid input"
 
 ### Warning Toast
-- **Use for**: Cautionary messages, potential issues, confirmations needed
-- **Color**: Orange/yellow theme
-- **Icon**: Warning or alert icon
-- **Examples**: "Session expiring", "Unsaved changes", "Confirm deletion"
+- **Use for**: Cautionary messages, potential issues
+- **Markup**: `category: 'warning'` / `data-category="warning"`
+- **Examples**: "Session expiring", "Unsaved changes"
 
 ### Info Toast
 - **Use for**: General information, updates, neutral notifications
-- **Color**: Blue theme
-- **Icon**: Info or lightbulb icon
+- **Markup**: `category: 'info'` / `data-category="info"`
 - **Examples**: "New feature available", "System maintenance", "Tip"
 
 ## Best Practices
@@ -306,62 +331,57 @@ ToastManager.info('Info', 'New update available.');
 
 ### UX Considerations
 - **Don't overuse toasts**: Limit to important notifications
-- **Use appropriate durations**: 3-5 seconds for most, longer for complex messages
-- **Consider user context**: Success messages can be shorter than errors
+- **Use appropriate durations**: the defaults (3 s, 5 s for errors) suit most messages
+- **Use `duration: -1` with an action** for anything the user must act on
 - **Provide alternatives**: Don't rely solely on toasts for critical information
 
 ### Timing Guidelines
 ```javascript
 const TOAST_DURATIONS = {
-  quick: 2000,    // Simple confirmations (copied, saved)
-  normal: 5000,   // Standard messages (success, info)
-  long: 8000,     // Warnings, complex information
-  persistent: 15000 // Critical errors, important announcements
+  quick: 2000,     // Simple confirmations (copied, saved)
+  normal: 3000,    // Library default
+  error: 5000,     // Library default for error toasts
+  long: 8000,      // Warnings, complex information
+  persistent: -1   // Stays open until dismissed
 };
 ```
 
 ### Accessibility Considerations
+- Toasts use `role="status"` and `aria-atomic="true"` so screen readers announce them politely
 - Toasts should not interfere with keyboard navigation
 - Important information should also be available elsewhere
-- Consider screen reader announcements for critical toasts
-- Provide alternative ways to access the same information
+- Give long-lived or actionable toasts enough time (or `duration: -1`)
 
 ## Error Handling
 
 ### Graceful Fallbacks
+The `toast()` method exists only after the toast script has initialized the toaster.
 ```javascript
 function safeShowToast(category, title, description) {
-  try {
-    if (typeof document !== 'undefined') {
-      document.dispatchEvent(new CustomEvent('basecoat:toast', {
-        detail: {
-          config: { category, title, description, duration: 5000 }
-        }
-      }));
-    }
-  } catch (error) {
-    console.warn('Toast system not available:', error);
-    // Fallback: show alert or log to console
-    console.log(`${category.toUpperCase()}: ${title} - ${description}`);
+  const toaster = document.getElementById('toaster');
+  if (toaster && typeof toaster.toast === 'function') {
+    return toaster.toast({ category, title, description });
   }
+  console.warn('Toast system not available');
+  console.log(`${category.toUpperCase()}: ${title} - ${description}`);
 }
 ```
 
 ### Validation
 ```javascript
-function validateToast(category, title, description) {
+function validateToast(category, title) {
   const validCategories = ['success', 'error', 'warning', 'info'];
-  
+
   if (!validCategories.includes(category)) {
     console.warn(`Invalid toast category: ${category}`);
     category = 'info';
   }
-  
+
   if (!title || title.trim() === '') {
     console.warn('Toast title is required');
     return false;
   }
-  
+
   return true;
 }
 ```
@@ -370,14 +390,10 @@ function validateToast(category, title, description) {
 
 ### React Integration
 ```javascript
-// Custom hook for toasts
+// Custom hook for toasts (render <div id="toaster" className="toaster" /> once in your layout)
 function useToast() {
   const showToast = useCallback((category, title, description) => {
-    document.dispatchEvent(new CustomEvent('basecoat:toast', {
-      detail: {
-        config: { category, title, description, duration: 5000 }
-      }
-    }));
+    document.getElementById('toaster')?.toast({ category, title, description });
   }, []);
 
   return {
@@ -396,19 +412,23 @@ const toastPlugin = {
   install(app) {
     app.config.globalProperties.$toast = {
       show(category, title, description) {
-        document.dispatchEvent(new CustomEvent('basecoat:toast', {
-          detail: {
-            config: { category, title, description, duration: 5000 }
-          }
-        }));
+        return document.getElementById('toaster')?.toast({ category, title, description });
       },
       success(title, description) {
-        this.show('success', title, description);
+        return this.show('success', title, description);
       },
       error(title, description) {
-        this.show('error', title, description);
+        return this.show('error', title, description);
       }
     };
   }
 };
 ```
+
+## Migrating from 0.x
+- Document-level events were removed. Replace
+  `document.dispatchEvent(new CustomEvent('basecoat:toast', { detail: { config } }))`
+  with `document.getElementById('toaster').toast(config)`. The config fields are unchanged.
+- The toaster no longer needs `fixed bottom-4 right-4 z-50` utilities; use `data-align` for placement.
+- Use `toaster.closeAll()` and `toastElement.close()` to dismiss toasts programmatically.
+- Old button classes (`btn-destructive`, etc.) work only with the compat stylesheet: `@import "basecoat-css/compat";`.

@@ -1,9 +1,16 @@
-<!-- Range Slider -->
-<div class="grid gap-2">
-  <label for="volume" class="label">Volume</label>
-  <input type="range" id="volume" class="input w-full" min="0" max="100" value="50">
-  <div class="flex justify-between text-sm text-muted-foreground">
-    <span>0</span>
-    <span>100</span>
+<!-- Range Slider with Label and Value (range.js keeps the filled track in sync) -->
+<div class="grid w-full gap-1 max-w-sm">
+  <div class="flex items-center justify-between gap-2">
+    <label class="label" for="volume">Volume</label>
+    <output class="text-sm text-muted-foreground" for="volume">50</output>
   </div>
+  <input
+    id="volume"
+    type="range"
+    class="input w-full"
+    min="0"
+    max="100"
+    value="50"
+    oninput="this.previousElementSibling.querySelector('output').value = this.value"
+  />
 </div>

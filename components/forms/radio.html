@@ -1,16 +1,15 @@
 <!-- Radio Button Group -->
-<fieldset class="grid gap-3">
-  <legend class="text-sm font-medium">Choose display mode</legend>
-  <label class="label">
-    <input type="radio" name="display-mode" value="comfortable" class="input" checked>
-    Comfortable
-  </label>
-  <label class="label">
-    <input type="radio" name="display-mode" value="compact" class="input">
-    Compact
-  </label>
-  <label class="label">
-    <input type="radio" name="display-mode" value="spacious" class="input">
-    Spacious
-  </label>
-</fieldset>
+<div role="radiogroup" aria-label="View density" data-slot="radio-group" class="w-fit">
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="radio" id="density-default" name="density" value="default" class="input" />
+    <label for="density-default">Default</label>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="radio" id="density-comfortable" name="density" value="comfortable" class="input" checked />
+    <label for="density-comfortable">Comfortable</label>
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <input type="radio" id="density-compact" name="density" value="compact" class="input" />
+    <label for="density-compact">Compact</label>
+  </div>
+</div>

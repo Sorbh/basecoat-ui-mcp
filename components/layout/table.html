@@ -1,17 +1,31 @@
-<!-- Responsive Table -->
-<div class="overflow-x-auto">
+<!-- Responsive Table (.table-container adds horizontal scrolling) -->
+<div class="table-container">
   <table class="table">
+    <caption>A list of your recent invoices.</caption>
     <thead>
       <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
+        <th>Invoice</th>
+        <th>Status</th>
+        <th class="text-end">Amount</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Data 1</td>
-        <td>Data 2</td>
+        <td class="font-medium">INV001</td>
+        <td>Paid</td>
+        <td class="text-end">$250.00</td>
+      </tr>
+      <tr>
+        <td class="font-medium">INV002</td>
+        <td>Pending</td>
+        <td class="text-end">$150.00</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Total</td>
+        <td class="text-end">$400.00</td>
+      </tr>
+    </tfoot>
   </table>
 </div>

@@ -13,12 +13,33 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const pkg = JSON.parse(await fs.readFile(path.join(__dirname, 'package.json'), 'utf-8'));
+const BASECOAT_VERSION = pkg.basecoatVersion;
+const USAGE_ALIASES = {
+  dropdown: 'dropdown-menu',
+  'dialog-alert': 'alert-dialog',
+  form: 'field',
+  checkbox: 'field',
+  radio: 'field',
+  switch: 'field',
+};
+const STYLE_PACKS = ['vega', 'nova', 'maia', 'lyra', 'mira', 'luma', 'sera', 'rhea'];
+
+async function listCategories(baseDir) {
+  try {
+    const entries = await fs.readdir(path.join(__dirname, baseDir), { withFileTypes: true });
+    return entries.filter(entry => entry.isDirectory()).map(entry => entry.name).sort();
+  } catch (error) {
+    return [];
+  }
+}
+
 class BasecoatMCPServer {
   constructor() {
     this.server = new Server(
       {
         name: 'basecoat-ui',
-        version: '1.0.0',
+        version: pkg.version,
       },
       {
         capabilities: {
@@ -31,7 +52,7 @@ class BasecoatMCPServer {
   }
 
   async getComponentsList() {
-    const categories = ['forms', 'navigation', 'feedback', 'interactive', 'layout'];
+    const categories = await listCategories('components');
     const components = {};
 
     for (const category of categories) {
@@ -40,6 +61,7 @@ class BasecoatMCPServer {
         const files = await fs.readdir(categoryPath);
         const htmlFiles = files
           .filter(file => file.endsWith('.html'))
+          .sort()
           .map(file => ({
             name: file.replace('.html', ''),
             category: category,
@@ -60,15 +82,21 @@ class BasecoatMCPServer {
   async getComponent(componentName) {
     const components = await this.getComponentsList();
 
+    // Accept "category/name" to disambiguate components that share a name
+    const [categoryFilter, name] = componentName.includes('/')
+      ? componentName.split('/', 2)
+      : [null, componentName];
+
     // Search across all categories
     for (const [category, categoryComponents] of Object.entries(components)) {
-      const component = categoryComponents.find(comp => comp.name === componentName);
+      if (categoryFilter && category !== categoryFilter) continue;
+      const component = categoryComponents.find(comp => comp.name === name);
       if (component) {
         const filePath = path.join(__dirname, 'components', category, component.file);
         try {
           const content = await fs.readFile(filePath, 'utf-8');
           return {
-            name: componentName,
+            name: name,
             category: category,
             html: content.trim(),
             file: component.file
@@ -83,33 +111,50 @@ class BasecoatMCPServer {
   }
 
   async getUsageDocumentation(componentName) {
-    const usageCategories = ['forms', 'navigation', 'feedback', 'interactive', 'layout'];
+    const usageCategories = await listCategories('usage');
 
-    for (const category of usageCategories) {
-      const usageFile = `${componentName}-usage.md`;
-      const usagePath = path.join(__dirname, 'usage', category, usageFile);
+    // Try the exact name first, then an alias, then drop trailing variant
+    // segments so "button-primary" falls back to "button"
+    const candidates = [];
+    const parts = componentName.split('-');
+    for (let i = parts.length; i > 0; i--) {
+      const candidate = parts.slice(0, i).join('-');
+      candidates.push(candidate);
+      if (USAGE_ALIASES[candidate]) candidates.push(USAGE_ALIASES[candidate]);
+    }
 
-      try {
-        const content = await fs.readFile(usagePath, 'utf-8');
-        return {
-          component: componentName,
-          category: category,
-          documentation: content.trim()
-        };
-      } catch (error) {
-        // Continue to next category
-        continue;
+    for (const candidate of candidates) {
+      for (const category of usageCategories) {
+        const usagePath = path.join(__dirname, 'usage', category, `${candidate}-usage.md`);
+
+        try {
+          const content = await fs.readFile(usagePath, 'utf-8');
+          return {
+            component: candidate,
+            category: category,
+            documentation: content.trim()
+          };
+        } catch (error) {
+          // Continue to next category
+          continue;
+        }
       }
     }
 
     throw new Error(`Usage documentation for '${componentName}' not found`);
   }
 
-  async getSetupCode() {
+  async getSetupCode(style = 'vega') {
+    if (!STYLE_PACKS.includes(style)) {
+      throw new Error(`Unknown style '${style}'. Available styles: ${STYLE_PACKS.join(', ')}`);
+    }
+
     const setupPath = path.join(__dirname, 'scripts', 'setup.html');
     try {
       const content = await fs.readFile(setupPath, 'utf-8');
-      return content.trim();
+      // Style packs are standalone bundles, so swap the default bundle instead of adding a second one
+      const stylesheet = style === 'vega' ? 'basecoat.cdn.min.css' : `basecoat-${style}.cdn.min.css`;
+      return content.trim().replace('basecoat.cdn.min.css', stylesheet);
     } catch (error) {
       throw new Error(`Failed to read setup code: ${error.message}`);
     }
@@ -174,7 +219,7 @@ class BasecoatMCPServer {
               properties: {
                 name: {
                   type: 'string',
-                  description: 'Component name (e.g., "button-primary", "card-basic", "input-with-label")',
+                  description: 'Component name (e.g., "button-primary", "card-basic", "field"), optionally prefixed with its category (e.g., "layout/pagination")',
                 },
               },
               required: ['name'],
@@ -207,7 +252,13 @@ class BasecoatMCPServer {
             description: 'Get Basecoat CSS setup code with CDN links',
             inputSchema: {
               type: 'object',
-              properties: {},
+              properties: {
+                style: {
+                  type: 'string',
+                  enum: STYLE_PACKS,
+                  description: 'Style pack to load (default: "vega"). Each style is a standalone bundle.',
+                },
+              },
             },
           },
           {
@@ -240,7 +291,7 @@ class BasecoatMCPServer {
               properties: {
                 category: {
                   type: 'string',
-                  description: 'Category name (forms, navigation, feedback, interactive, layout)',
+                  description: 'Category name (combine, feedback, forms, interactive, layout, navigation)',
                 },
               },
               required: ['category'],
@@ -269,7 +320,7 @@ class BasecoatMCPServer {
 
           case 'list_components': {
             const components = await this.getComponentsList();
-            let output = '# Basecoat UI Components\n\n';
+            let output = `# Basecoat UI Components (v${BASECOAT_VERSION})\n\n`;
 
             for (const [category, categoryComponents] of Object.entries(components)) {
               output += `## ${category.charAt(0).toUpperCase() + category.slice(1)}\n\n`;
@@ -302,13 +353,12 @@ class BasecoatMCPServer {
           }
 
           case 'get_setup': {
-            const setupCode = await this.getSetupCode();
+            const setupCode = await this.getSetupCode(args?.style);
             return {
               content: [
                 {
                   type: 'text',
-                  text: `# Basecoat CSS Setup\n\nAdd this to your HTML \`<head>\` section:\n\n\`\`\`html\n${setupCode}\n\`\`\``,
-                  node: `Use TailwindCSS classes for customization.`
+                  text: `# Basecoat CSS Setup (v${BASECOAT_VERSION})\n\nAdd this to your HTML \`<head>\` section:\n\n\`\`\`html\n${setupCode}\n\`\`\`\n\nUse Tailwind CSS classes for customization.`,
                 },
               ],
             };

@@ -1,56 +1,99 @@
 # Select Component Usage
 
 ## Overview
-The select component allows users to choose an option from a list. It provides both native HTML select and custom JavaScript-enhanced implementations with improved styling and functionality.
+Basecoat offers two select options:
+- **Native Select**: add `class="select"` to a native `<select>`. CSS-only, best for form integration and mobile-optimized pickers.
+- **Select (JavaScript)**: a `<div class="select">` with a trigger button, a popover listbox, and a hidden input. Use it for custom option content, groups with headings, multi-select, or the JavaScript API.
 
 ## JavaScript Requirements
+
+Native Select needs no JavaScript. The JavaScript Select needs the Basecoat runtime plus the Select script, or the all-in-one bundle.
 
 ### Required Scripts
 ```html
 <!-- Include Basecoat CSS and JavaScript -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/basecoat.cdn.min.css">
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/basecoat.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/basecoat-css@0.3.1/dist/js/select.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/basecoat.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/select.min.js" defer></script>
+
+<!-- Or the all-in-one bundle -->
+<script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
 ```
+
+## Class and Attribute Reference
+
+### Native Select
+| Markup | Description |
+| --- | --- |
+| `<select class="select">` | Styled native select. Use `<option>` and `<optgroup>`. |
+| `data-size="sm"` | Small size. |
+| `aria-invalid="true"` | Invalid styling (pair with `data-invalid` on a wrapping `.field`). |
+
+### JavaScript Select
+| Markup | Description |
+| --- | --- |
+| `<div class="select">` | Select root. `data-placeholder="..."` shows placeholder text when nothing is selected. `data-close-on-select="true"` for multiple select; `data-format="object"` serializes `{ value, label }` objects. |
+| `<button type="button">` | Trigger. Needs `aria-haspopup="listbox"`, `aria-expanded`, and `aria-controls` (the listbox id). Contains a `<span class="truncate">` label and a chevron icon. |
+| `<div data-popover aria-hidden="true">` | Popover. Supports `data-side` and `data-align`. |
+| `<div role="listbox">` | Options container with `aria-orientation="vertical"` and `aria-labelledby` (the trigger id). Add `aria-multiselectable="true"` for multiple selection. |
+| `<div role="option" data-value="...">` | Option. `data-value` is submitted; optional `data-label` sets the displayed label. `aria-disabled="true"` disables it. |
+| `<div role="group" aria-labelledby="...">` + `<span role="heading">` | Optional option group with heading. |
+| `<hr role="separator" />` | Optional separator. |
+| `<input type="hidden" name="..." value="">` | Submitted value. String for single select, JSON array for multiple select. |
+
+The JavaScript Select has no built-in search box. For a searchable list, use the Combobox component.
 
 ## Native HTML Select
 
 ### Basic Native Select
 ```html
-<select class="select" name="options">
-  <option value="">Choose an option...</option>
-  <option value="option1">Option 1</option>
-  <option value="option2">Option 2</option>
-  <option value="option3">Option 3</option>
+<select class="select" aria-label="Fruit">
+  <option value="">Select a fruit</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="blueberry">Blueberry</option>
+  <option value="pineapple">Pineapple</option>
 </select>
 ```
 
 ### Native Select with Label
 ```html
-<div class="grid gap-2">
-  <label for="country" class="label">Country</label>
-  <select class="select" id="country" name="country" required>
-    <option value="">Select a country...</option>
-    <option value="us">United States</option>
-    <option value="ca">Canada</option>
-    <option value="uk">United Kingdom</option>
+<div role="group" class="field">
+  <label for="department">Department</label>
+  <select id="department" class="select w-full" aria-describedby="department-description">
+    <option value="">Choose department</option>
+    <option value="engineering">Engineering</option>
+    <option value="design">Design</option>
+    <option value="marketing">Marketing</option>
   </select>
+  <p id="department-description">Select your department or area of work.</p>
 </div>
 ```
 
 ### Native Select with Option Groups
 ```html
-<select class="select" name="location">
-  <option value="">Choose location...</option>
-  <optgroup label="North America">
-    <option value="us">United States</option>
-    <option value="ca">Canada</option>
+<select class="select w-full" aria-label="Food">
+  <option value="">Select food</option>
+  <optgroup label="Fruits">
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="blueberry">Blueberry</option>
   </optgroup>
-  <optgroup label="Europe">
-    <option value="uk">United Kingdom</option>
-    <option value="de">Germany</option>
-    <option value="fr">France</option>
+  <optgroup label="Vegetables">
+    <option value="carrot">Carrot</option>
+    <option value="potato">Potato</option>
+    <option value="tomato">Tomato</option>
   </optgroup>
+</select>
+```
+
+### Native Select Sizes
+```html
+<select class="select w-42" aria-label="Default size">
+  <option>Default</option>
+</select>
+<select class="select w-42" data-size="sm" aria-label="Small size">
+  <option>Small</option>
 </select>
 ```
 
@@ -58,101 +101,55 @@ The select component allows users to choose an option from a list. It provides b
 
 ### Basic Custom Select
 ```html
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded" aria-haspopup="listbox">
-    <span>Choose option...</span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
+<div id="select-theme" class="select" data-placeholder="Theme">
+  <button type="button" class="w-[180px]" id="select-theme-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-theme-listbox">
+    <span class="truncate">Theme</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg" aria-hidden="true">
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div role="option" data-value="option1" class="p-2 hover:bg-muted cursor-pointer">Option 1</div>
-      <div role="option" data-value="option2" class="p-2 hover:bg-muted cursor-pointer">Option 2</div>
-      <div role="option" data-value="option3" class="p-2 hover:bg-muted cursor-pointer">Option 3</div>
+  <div id="select-theme-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-theme-listbox" aria-orientation="vertical" aria-labelledby="select-theme-trigger">
+      <div role="option" data-value="light">Light</div>
+      <div role="option" data-value="dark">Dark</div>
+      <div role="option" data-value="system">System</div>
     </div>
   </div>
-  <input type="hidden" name="select-value" value="">
-</div>
-```
-
-### Custom Select with Icons
-```html
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded" aria-haspopup="listbox">
-    <span class="flex items-center gap-2">
-      <span class="w-4 h-4">🌍</span>
-      <span>Choose country...</span>
-    </span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div role="option" data-value="us" class="flex items-center gap-2 p-2 hover:bg-muted cursor-pointer">
-        <span>🇺🇸</span>
-        <span>United States</span>
-      </div>
-      <div role="option" data-value="ca" class="flex items-center gap-2 p-2 hover:bg-muted cursor-pointer">
-        <span>🇨🇦</span>
-        <span>Canada</span>
-      </div>
-      <div role="option" data-value="uk" class="flex items-center gap-2 p-2 hover:bg-muted cursor-pointer">
-        <span>🇬🇧</span>
-        <span>United Kingdom</span>
-      </div>
-    </div>
-  </div>
-  <input type="hidden" name="country" value="">
-</div>
-```
-
-### Custom Select with Search (Combobox)
-```html
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded" aria-haspopup="listbox">
-    <span>Select framework...</span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-    <header class="p-2 border-b">
-      <input type="text" class="input w-full" placeholder="Search frameworks..." aria-label="Search options">
-    </header>
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div role="option" data-value="react" class="p-2 hover:bg-muted cursor-pointer">React</div>
-      <div role="option" data-value="vue" class="p-2 hover:bg-muted cursor-pointer">Vue.js</div>
-      <div role="option" data-value="angular" class="p-2 hover:bg-muted cursor-pointer">Angular</div>
-      <div role="option" data-value="svelte" class="p-2 hover:bg-muted cursor-pointer">Svelte</div>
-    </div>
-  </div>
-  <input type="hidden" name="selected-framework" value="">
+  <input type="hidden" name="theme" value="" />
 </div>
 ```
 
 ### Custom Select with Groups
 ```html
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded" aria-haspopup="listbox">
-    <span>Choose technology...</span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
+<div id="select-groups" class="select" data-placeholder="Select a fruit">
+  <button type="button" class="w-[180px]" id="select-groups-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-groups-listbox">
+    <span class="truncate">Select a fruit</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div class="px-2 py-1 text-sm font-medium text-muted-foreground bg-muted">Frontend</div>
-      <div role="option" data-value="react" class="p-2 hover:bg-muted cursor-pointer">React</div>
-      <div role="option" data-value="vue" class="p-2 hover:bg-muted cursor-pointer">Vue.js</div>
-      
-      <div class="px-2 py-1 text-sm font-medium text-muted-foreground bg-muted">Backend</div>
-      <div role="option" data-value="node" class="p-2 hover:bg-muted cursor-pointer">Node.js</div>
-      <div role="option" data-value="python" class="p-2 hover:bg-muted cursor-pointer">Python</div>
+  <div id="select-groups-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-groups-listbox" aria-orientation="vertical" aria-labelledby="select-groups-trigger">
+      <div role="group" aria-labelledby="select-groups-fruits">
+        <span role="heading" id="select-groups-fruits">Fruits</span>
+        <div role="option" data-value="apple">Apple</div>
+        <div role="option" data-value="banana">Banana</div>
+        <div role="option" data-value="blueberry">Blueberry</div>
+      </div>
+      <hr role="separator" />
+      <div role="group" aria-labelledby="select-groups-vegetables">
+        <span role="heading" id="select-groups-vegetables">Vegetables</span>
+        <div role="option" data-value="carrot">Carrot</div>
+        <div role="option" data-value="broccoli">Broccoli</div>
+        <div role="option" data-value="spinach">Spinach</div>
+      </div>
     </div>
   </div>
-  <input type="hidden" name="technology" value="">
+  <input type="hidden" name="select-groups-value" value="" />
+</div>
+```
+
+### Scrollable Custom Select
+For long lists, add scroll utilities to the listbox.
+```html
+<div role="listbox" id="select-scrollable-listbox" class="scrollbar-sm max-h-70 overflow-y-auto" aria-orientation="vertical" aria-labelledby="select-scrollable-trigger">
+  <!-- options -->
 </div>
 ```
 
@@ -161,26 +158,32 @@ The select component allows users to choose an option from a list. It provides b
 ### Disabled Select
 ```html
 <!-- Native disabled -->
-<select class="select" disabled>
-  <option>Disabled select</option>
+<select class="select w-full" aria-label="Fruit" disabled>
+  <option value="">Select a fruit</option>
+  <option value="apple">Apple</option>
 </select>
 
-<!-- Custom disabled -->
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded opacity-50" disabled>
-    <span>Disabled select</span>
-    <svg class="w-4 h-4"><!-- chevron --></svg>
+<!-- Custom select: disable the trigger, or single options with aria-disabled -->
+<div id="select-disabled" class="select" data-placeholder="Select a fruit">
+  <button type="button" class="w-[180px]" id="select-disabled-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-disabled-listbox" disabled>
+    <span class="truncate">Select a fruit</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
   </button>
+  <div id="select-disabled-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="select-disabled-listbox" aria-orientation="vertical" aria-labelledby="select-disabled-trigger">
+      <div role="option" data-value="apple">Apple</div>
+      <div role="option" data-value="grapes" aria-disabled="true">Grapes</div>
+    </div>
+  </div>
+  <input type="hidden" name="select-disabled-value" value="" />
 </div>
 ```
 
 ### Required Select
 ```html
-<div class="grid gap-2">
-  <label for="required-select" class="label">
-    Country <span class="text-destructive">*</span>
-  </label>
-  <select class="select" id="required-select" required>
+<div role="group" class="field">
+  <label for="required-select">Country <span class="text-destructive">*</span></label>
+  <select class="select w-full" id="required-select" required>
     <option value="">Select country...</option>
     <option value="us">United States</option>
     <option value="ca">Canada</option>
@@ -190,42 +193,53 @@ The select component allows users to choose an option from a list. It provides b
 
 ### Invalid Select
 ```html
-<div class="grid gap-2">
-  <label for="invalid-select" class="label">Country</label>
-  <select class="select" id="invalid-select" aria-invalid="true" required>
-    <option value="">Select country...</option>
-    <option value="us">United States</option>
+<!-- Native -->
+<div role="group" class="field" data-invalid="true">
+  <label for="native-select-invalid">Fruit</label>
+  <select id="native-select-invalid" class="select w-full" aria-invalid="true" aria-describedby="native-select-invalid-error">
+    <option value="">Select a fruit</option>
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
   </select>
-  <p class="text-destructive text-sm">Please select a country</p>
+  <p id="native-select-invalid-error" role="alert">Select a fruit to continue.</p>
+</div>
+
+<!-- Custom: aria-invalid goes on the trigger button -->
+<div class="field" data-invalid="true">
+  <label for="select-invalid-trigger">Fruit</label>
+  <div id="select-invalid" class="select" data-placeholder="Select a fruit">
+    <button type="button" class="w-[180px]" id="select-invalid-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-invalid-listbox" aria-invalid="true">
+      <span class="truncate">Select a fruit</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+    </button>
+    <div id="select-invalid-popover" data-popover aria-hidden="true">
+      <div role="listbox" id="select-invalid-listbox" aria-orientation="vertical" aria-labelledby="select-invalid-trigger">
+        <div role="option" data-value="apple">Apple</div>
+        <div role="option" data-value="banana">Banana</div>
+      </div>
+    </div>
+    <input type="hidden" name="fruit" value="" />
+  </div>
+  <p role="alert">Please select a valid fruit.</p>
 </div>
 ```
 
 ## JavaScript API
 
-### Programmatic Control
+| API | Type | Description |
+| --- | --- | --- |
+| `change` | Event | Dispatched on the `.select` root on selection changes, with `event.detail.value` and `event.detail.selected`. Bubbles. |
+| `select.refresh()` | Method | Rescans options after children change inside the existing `role="listbox"` element. |
+
+Basecoat initializes selects on page load and when new DOM is inserted. After inserting HTML manually, call `window.basecoat.initAll()`.
+
+### Listening for Changes
 ```javascript
-// Initialize select after DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-  const selectElement = document.querySelector('.select');
-  
-  // Select option by value
-  if (selectElement.selectByValue) {
-    selectElement.selectByValue('option2');
-  }
-});
+const select = document.querySelector('#select-theme');
 
-// Listen for select changes
-document.addEventListener('change', function(e) {
-  if (e.target.matches('.select input[type="hidden"]')) {
-    console.log('Selected value:', e.target.value);
-  }
-});
-
-// Listen for initialization
-document.addEventListener('basecoat:initialized', function(e) {
-  if (e.target.matches('.select')) {
-    console.log('Select component initialized');
-  }
+select.addEventListener('change', (event) => {
+  console.log('Selected value:', event.detail.value);
+  console.log('Selected option:', event.detail.selected);
 });
 ```
 
@@ -233,52 +247,30 @@ document.addEventListener('basecoat:initialized', function(e) {
 ```javascript
 function updateSelectOptions(selectElement, options) {
   const listbox = selectElement.querySelector('[role="listbox"]');
-  const hiddenInput = selectElement.querySelector('input[type="hidden"]');
-  
-  // Clear existing options
+
   listbox.innerHTML = '';
-  
-  // Add new options
+
   options.forEach(option => {
     const optionElement = document.createElement('div');
     optionElement.setAttribute('role', 'option');
     optionElement.setAttribute('data-value', option.value);
-    optionElement.className = 'p-2 hover:bg-muted cursor-pointer';
     optionElement.textContent = option.label;
     listbox.appendChild(optionElement);
   });
-  
-  // Reset selection
-  hiddenInput.value = '';
-  selectElement.querySelector('button span').textContent = 'Choose option...';
+
+  // Let Basecoat pick up the new options
+  selectElement.refresh();
 }
 ```
 
 ## Accessibility Guidelines
 
 ### ARIA Attributes
-```html
-<div class="select">
-  <button type="button" 
-          aria-haspopup="listbox" 
-          aria-expanded="false"
-          aria-labelledby="select-label">
-    <span>Choose option...</span>
-  </button>
-  <div data-popover aria-hidden="true">
-    <div role="listbox" 
-         aria-labelledby="select-label"
-         aria-activedescendant="">
-      <div role="option" 
-           id="option-1" 
-           data-value="option1"
-           aria-selected="false">
-        Option 1
-      </div>
-    </div>
-  </div>
-</div>
-```
+- Trigger: `aria-haspopup="listbox"`, `aria-expanded="false"`, `aria-controls` pointing at the listbox id
+- Listbox: `aria-labelledby` pointing at the trigger id, `aria-orientation="vertical"`
+- Popover: starts with `aria-hidden="true"`; Basecoat toggles it
+- Groups: `role="group"` with `aria-labelledby` pointing at its `role="heading"` span
+- Native select without a visible label: add `aria-label`
 
 ### Keyboard Navigation
 - **Enter/Space**: Open/close select
@@ -289,10 +281,10 @@ function updateSelectOptions(selectElement, options) {
 ## Best Practices
 
 ### User Experience
-- Provide clear default/placeholder text
-- Use logical grouping for many options
-- Implement search for long lists (10+ items)
-- Show selected value clearly in the trigger button
+- Provide clear placeholder text via `data-placeholder` and the trigger label
+- Use groups with headings for many options
+- Use the Combobox component when users need to search long lists
+- Prefer Native Select for simple choices and mobile forms
 
 ### Accessibility
 - Always associate labels with select elements
@@ -302,38 +294,45 @@ function updateSelectOptions(selectElement, options) {
 
 ### Performance
 - Lazy load options for large datasets
-- Implement virtual scrolling for very long lists
-- Debounce search input to avoid excessive filtering
+- Call `refresh()` once after a batch of option changes, not per option
 - Cache frequently used option sets
 
 ### Form Integration
 ```html
-<form class="form grid gap-6">
-  <div class="grid gap-2">
-    <label for="category" class="label">Category</label>
-    <select class="select" id="category" name="category" required>
+<form class="space-y-6">
+  <div role="group" class="field">
+    <label for="category">Category</label>
+    <select class="select w-full" id="category" name="category" required>
       <option value="">Select category...</option>
       <option value="tech">Technology</option>
       <option value="design">Design</option>
     </select>
   </div>
-  
-  <div class="select">
-    <label class="label mb-2">Priority</label>
-    <button type="button" class="flex items-center justify-between w-full p-2 border rounded">
-      <span>Choose priority...</span>
-      <svg class="w-4 h-4"><!-- chevron --></svg>
-    </button>
-    <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-      <div role="listbox">
-        <div role="option" data-value="high" class="p-2 hover:bg-muted cursor-pointer">High</div>
-        <div role="option" data-value="medium" class="p-2 hover:bg-muted cursor-pointer">Medium</div>
-        <div role="option" data-value="low" class="p-2 hover:bg-muted cursor-pointer">Low</div>
+
+  <div role="group" class="field">
+    <label for="select-priority-trigger">Priority</label>
+    <div id="select-priority" class="select" data-placeholder="Choose priority">
+      <button type="button" class="w-full" id="select-priority-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="select-priority-listbox">
+        <span class="truncate">Choose priority</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-muted-foreground opacity-50 shrink-0"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <div id="select-priority-popover" data-popover aria-hidden="true">
+        <div role="listbox" id="select-priority-listbox" aria-orientation="vertical" aria-labelledby="select-priority-trigger">
+          <div role="option" data-value="high">High</div>
+          <div role="option" data-value="medium">Medium</div>
+          <div role="option" data-value="low">Low</div>
+        </div>
       </div>
+      <input type="hidden" name="priority" value="" />
     </div>
-    <input type="hidden" name="priority" value="">
   </div>
-  
+
   <button type="submit" class="btn">Submit</button>
 </form>
 ```
+
+## Migrating from 0.x
+- The custom select no longer has a search `<header>` inside the popover; use the Combobox component for searchable lists.
+- Options no longer need utility classes (`p-2 hover:bg-muted ...`) and the trigger no longer needs border/padding utilities; Basecoat styles them.
+- The `.form` wrapper was removed; use `<div role="group" class="field">` around each label + control.
+- The optional `basecoat-css/compat` stylesheet only restores legacy aliases for older markup during migration.

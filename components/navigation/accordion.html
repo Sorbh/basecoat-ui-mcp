@@ -1,28 +1,24 @@
-<!-- Accordion Structure -->
+<!-- Accordion Structure (native details/summary; add data-multiple to allow several open items) -->
 <section class="accordion">
-  <details class="group border-b last:border-b-0">
-    <summary class="flex items-center justify-between p-4 cursor-pointer">
-      <h3>Section Title</h3>
-      <svg class="w-4 h-4 transition-transform group-open:rotate-180" 
-           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+  <details open>
+    <summary>
+      Section Title
+      <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section class="p-4 pt-0">
-      <p>Section content goes here...</p>
-    </section>
+    <section>Section content goes here...</section>
   </details>
-  
-  <details class="group border-b last:border-b-0">
-    <summary class="flex items-center justify-between p-4 cursor-pointer">
-      <h3>Another Section</h3>
-      <svg class="w-4 h-4 transition-transform group-open:rotate-180" 
-           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+  <details>
+    <summary>
+      Another Section
+      <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
     </summary>
-    <section class="p-4 pt-0">
-      <p>More content...</p>
-    </section>
+    <section>More content...</section>
+  </details>
+  <details aria-disabled="true">
+    <summary>
+      Disabled Section
+      <svg class="lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+    </summary>
+    <section>This item cannot be toggled.</section>
   </details>
 </section>

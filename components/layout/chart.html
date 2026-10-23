@@ -1,0 +1,23 @@
+<!-- Chart (BETA): Chart.js bar chart themed by Basecoat via window.basecoat.chart(). Requires Chart.js (chart.umd.min.js) + basecoat.min.js + chart.min.js; chart is NOT included in all.min.js. -->
+<canvas id="visitors-chart" aria-label="Monthly visitors"></canvas>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    window.basecoat.chart("#visitors-chart", {
+      type: "bar",
+      labelKey: "month",
+      data: [
+        { month: "Jan", desktop: 186, mobile: 80 },
+        { month: "Feb", desktop: 305, mobile: 200 },
+        { month: "Mar", desktop: 237, mobile: 120 },
+        { month: "Apr", desktop: 73, mobile: 190 },
+        { month: "May", desktop: 209, mobile: 130 },
+        { month: "Jun", desktop: 214, mobile: 140 },
+      ],
+      series: {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" },
+      },
+      legend: true,
+    })
+  })
+</script>

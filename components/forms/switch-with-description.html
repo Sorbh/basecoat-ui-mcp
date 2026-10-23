@@ -1,7 +1,8 @@
-<div class="flex items-start justify-between">
-  <div class="grid gap-1">
-    <label for="notifications-switch" class="label">Push Notifications</label>
-    <p class="text-sm text-muted-foreground">Receive notifications on your device</p>
-  </div>
-  <input type="checkbox" id="notifications-switch" role="switch" class="input">
+<!-- Switch with Label and Description -->
+<div role="group" class="field" data-orientation="horizontal">
+  <section>
+    <label for="notifications-switch">Push Notifications</label>
+    <p id="notifications-switch-description">Receive notifications on your device.</p>
+  </section>
+  <input type="checkbox" id="notifications-switch" role="switch" class="input" aria-describedby="notifications-switch-description" />
 </div>

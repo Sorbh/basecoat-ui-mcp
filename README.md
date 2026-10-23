@@ -3,6 +3,7 @@
 # Basecoat MCP Server
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-blue.svg)](https://nodejs.org/en/download/releases/)
+[![Basecoat](https://img.shields.io/badge/basecoat-1.0.2-black.svg)](https://basecoatui.com/)
 
 ## Story
 
@@ -17,9 +18,10 @@ A Model Context Protocol (MCP) server that provides programmatic access to [Base
 
 ## Features
 
-- **30+ Component Variants**: Access to buttons, inputs, cards, dialogs, tabs, and more.
-- **Usage Documentation**: Complete implementation guides with examples for each component.
-- **Setup Scripts**: Get CDN links and theme switching code instantly.
+- **Basecoat 1.0.2**: All markup follows the 1.0 API (`class="btn" data-variant="outline"`, `.field`, method-based JS).
+- **90+ Component Variants**: Buttons, fields, input groups, cards, dialogs, command menus, drawers, charts and more.
+- **Usage Documentation**: Implementation guides for 30 components, including JS requirements and 0.x migration notes.
+- **Setup Scripts**: CDN links for any style pack (Vega, Nova, Maia, Lyra, Mira, Luma, Sera, Rhea) and the theme script.
 - **Search & Discovery**: Find components by name or category.
 - **Accessibility Ready**: All components include ARIA attributes and semantic HTML.
 
@@ -105,73 +107,80 @@ For local development or if you want to modify the server:
 
 | Tool | Description | Parameters |
 |------|-------------|------------|
-| `get_component` | Get HTML code for a specific component variant | `name`: Component name (e.g., "button-primary", "card-basic") |
+| `get_component` | Get HTML code for a specific component variant | `name`: Component name (e.g., "button-outline", "field", "command"). Prefix with a category to disambiguate (e.g., "layout/pagination") |
 | `list_components` | List all available components organized by category | None |
-| `get_usage` | Get comprehensive usage documentation for a component | `component`: Base component name (e.g., "button", "card") |
-| `get_setup` | Get Basecoat CSS setup code with CDN links | None |
+| `get_usage` | Get usage documentation for a component | `component`: Component name (e.g., "button", "combobox"). Variant names fall back to their base doc ("button-primary" → "button") |
+| `get_setup` | Get Basecoat CSS setup code with CDN links | `style` (optional): vega (default), nova, maia, lyra, mira, luma, sera, rhea |
 | `get_theme_script` | Get theme switcher script for dark/light mode | None |
 | `search_components` | Search for components by name or category | `query`: Search term (e.g., "button", "form", "navigation") |
-| `get_category` | Get all components in a specific category | `category`: Category name (forms, navigation, feedback, interactive, layout) |
+| `get_category` | Get all components in a specific category | `category`: combine, feedback, forms, interactive, layout, navigation |
 
 ## Component Categories
 
 ### Forms
-- **Buttons**: primary, secondary, outline, destructive, ghost, link, icon variants
-- **Inputs**: basic, with-label, invalid states
-- **Select**: native, custom dropdowns
-- **Checkbox**: basic, with-label, with-description
-- **Radio**: single, group variations
-- **Switch**: basic, with-description
-- **Textarea, Label, Form container**
+- **Button**: default, secondary, outline, ghost, link, destructive, sizes, icon, with-icon, loading
+- **Button Group**: horizontal, vertical
+- **Field / Fieldset**: label, description, invalid state, grouped fields
+- **Input / Input Group**: basic, with-label, invalid, with icon, with button
+- **Select**: native select, JS select
+- **Checkbox, Radio Group, Switch**: with labels and descriptions
+- **Slider, Textarea, Label, Form container**
 
 ### Navigation
-- **Tabs**: horizontal, vertical with ARIA support
-- **Accordion**: collapsible content sections
-- **Breadcrumb**: navigation trails
-- **Sidebar**: off-canvas navigation
+- **Tabs**, **Accordion**, **Breadcrumb**, **Sidebar**
 
 ### Feedback
-- **Alert**: success, error variants
+- **Alert**: default, success, error
+- **Alert Dialog**, **Dialog**: confirmation and modal forms
 - **Badge**: primary, secondary, destructive, outline
-- **Dialog**: modal, alert dialog variations
-- **Toast**: notification system
+- **Toast**, **Empty**, **Progress**, **Spinner**
 
 ### Interactive
-- **Dropdown**: context menus with various item types
-- **Popover**: rich content tooltips
-- **Tooltip**: simple hover tooltips with positioning
-- **Combobox**: searchable select dropdowns
-- **Theme Switcher**: dark/light mode toggle
+- **Command**: inline and dialog palettes
+- **Combobox**: input-first searchable select
+- **Dropdown Menu**, **Popover**, **Tooltip**
+- **Drawer** (beta): bottom and side
+- **Theme Switcher**
 
 ### Layout
-- **Card**: basic, with-icon variants
-- **Avatar**: small, medium, large, fallback
-- **Skeleton**: loading states for profile, card
-- **Table**: responsive data display
-- **Pagination**: navigation for large datasets
+- **Card**, **Avatar**, **Item**, **Kbd**, **Scroll Area**
+- **Skeleton**, **Table**, **Pagination**
+- **Chart** (beta)
 
+### Combine
+Composed examples: chat, login, settings, interactive pagination.
+
+## Upgrading from 1.x of this MCP
+
+Version 2.0.0 of this MCP targets Basecoat 1.0.2, which has breaking changes from Basecoat 0.3.x:
+
+- Variant classes became data attributes: `btn-outline` → `class="btn" data-variant="outline"`, `btn-sm-icon` → `data-size="icon-sm"`.
+- The `.form` wrapper was removed; wrap each label and control in `<div class="field">`.
+- Document events (`basecoat:toast`, `basecoat:sidebar`, `basecoat:theme`) were replaced by methods: `toaster.toast()`, `sidebar.toggle()`, `window.basecoat.theme.toggle()`.
+- `dialog-alert` was renamed to `alert-dialog`.
+
+If your project still has 0.x markup, load Basecoat's compatibility stylesheet after Basecoat while you migrate (`@import "basecoat-css/compat";`). See `style-guide.md` for the full migration guide.
 
 ## Directory Structure
 
 ```
 basecoat-mcp/
 ├── components/           # HTML component files
-│   ├── forms/           # Form elements
-│   ├── navigation/      # Navigation components  
-│   ├── feedback/        # Alerts, badges, dialogs
-│   ├── interactive/     # Dropdowns, tooltips
-│   └── layout/          # Cards, tables, avatars
-├── usage/               # Usage documentation
-│   ├── forms/
-│   ├── navigation/
-│   ├── feedback/
-│   ├── interactive/
-│   └── layout/
-├── scripts/             # Setup and utility scripts
+│   ├── combine/         # Composed page examples
+│   ├── feedback/        # Alerts, badges, dialogs, toasts
+│   ├── forms/           # Buttons, fields, inputs, selects
+│   ├── interactive/     # Command, combobox, dropdowns, tooltips
+│   ├── layout/          # Cards, tables, avatars, items
+│   └── navigation/      # Tabs, accordion, sidebar
+├── usage/               # Usage documentation (same categories)
+├── scripts/             # Setup and theme scripts
+├── style-guide.md       # Full Basecoat 1.0 style and migration guide
 ├── server.js            # MCP server implementation
 ├── package.json
 └── README.md
 ```
+
+Categories are read from disk, so adding a folder under `components/` or `usage/` is enough to expose it.
 
 ## About Basecoat CSS
 
