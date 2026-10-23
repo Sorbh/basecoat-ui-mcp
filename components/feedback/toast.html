@@ -1,2 +1,13 @@
-<!-- Toast Container -->
-<div id="toaster" class="toaster fixed bottom-4 right-4 z-50" data-align="end"></div>
+<!-- Toast Container (place once near the end of <body>; data-align="start|center|end") -->
+<div id="toaster" class="toaster"></div>
+
+<!-- Trigger a toast from JavaScript (requires toast.min.js or all.min.js) -->
+<button
+  type="button"
+  class="btn" data-variant="outline"
+  onclick="document.getElementById('toaster').toast({
+    category: 'success',
+    title: 'Success',
+    description: 'Your changes have been saved.',
+    cancel: { label: 'Dismiss' }
+  })">Show Toast</button>

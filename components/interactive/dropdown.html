@@ -1,34 +1,46 @@
 <!-- Context Menu with Various Item Types -->
-<div class="dropdown-menu">
-  <button type="button" aria-haspopup="menu" class="btn-outline">
+<div id="options-dropdown" class="dropdown-menu">
+  <button type="button" id="options-dropdown-trigger" aria-haspopup="menu" aria-controls="options-dropdown-menu" aria-expanded="false" class="btn" data-variant="outline">
     Options
-    <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
+    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
   </button>
-  <div popover class="border rounded bg-background shadow-lg p-1">
-    <div role="menu" class="min-w-48">
-      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
-        <span class="material-symbols-outlined mr-2">edit</span>
-        Edit
+  <div id="options-dropdown-popover" data-popover aria-hidden="true" class="min-w-48">
+    <div role="menu" id="options-dropdown-menu" aria-labelledby="options-dropdown-trigger">
+      <div role="group">
+        <div role="menuitem"><svg class="lucide lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
+          <span>Edit</span>
+          <kbd>⌘E</kbd>
+        </div>
+        <div role="menuitem"><svg class="lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+          <span>Copy</span>
+          <kbd>⌘C</kbd>
+        </div>
       </div>
-      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
-        <span class="material-symbols-outlined mr-2">content_copy</span>
-        Copy
+      <hr role="separator" />
+      <div role="group" aria-labelledby="options-dropdown-appearance">
+        <div role="heading" id="options-dropdown-appearance">Appearance</div>
+        <div role="menuitemcheckbox" aria-checked="true">
+          <span data-indicator><svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span>
+          Show toolbar
+        </div>
       </div>
-      <hr class="my-1">
-      <div role="menuitemcheckbox" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
-        <input type="checkbox" class="mr-2" checked>
-        Show toolbar
+      <hr role="separator" />
+      <div role="group" aria-labelledby="options-dropdown-view">
+        <div role="heading" id="options-dropdown-view">View</div>
+        <div role="menuitemradio" aria-checked="true">
+          <span data-indicator><svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span>
+          Grid view
+        </div>
+        <div role="menuitemradio" aria-checked="false">
+          <span data-indicator><svg class="lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg></span>
+          List view
+        </div>
       </div>
-      <div role="menuitemradio" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer">
-        <input type="radio" name="view" class="mr-2" checked>
-        Grid view
-      </div>
-      <hr class="my-1">
-      <div role="menuitem" class="flex items-center p-2 hover:bg-muted rounded cursor-pointer text-destructive">
-        <span class="material-symbols-outlined mr-2">delete</span>
-        Delete
+      <hr role="separator" />
+      <div role="group">
+        <div role="menuitem" data-variant="destructive"><svg class="lucide lucide-trash" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>
+          Delete
+        </div>
       </div>
     </div>
   </div>

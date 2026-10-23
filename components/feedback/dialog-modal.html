@@ -1,27 +1,28 @@
-<dialog id="example-dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
-  <article>
+<!-- Modal Dialog: native <dialog class="dialog"> opened with showModal(); inner <div> is the content surface -->
+<button type="button" onclick="document.getElementById('example-dialog').showModal()" class="btn" data-variant="outline">Edit Profile</button>
+
+<dialog id="example-dialog" class="dialog" aria-labelledby="example-dialog-title" aria-describedby="example-dialog-description" onclick="if (event.target === this) this.close()">
+  <div class="sm:max-w-sm">
     <header>
-      <h2 id="dialog-title">Edit Profile</h2>
-      <p id="dialog-description">Update your profile information</p>
-      <button onclick="this.closest('dialog').close()" class="btn-icon absolute top-4 right-4">
-        <span class="material-symbols-outlined">close</span>
-      </button>
+      <h2 id="example-dialog-title">Edit Profile</h2>
+      <p id="example-dialog-description">Update your profile information. Click save when you're done.</p>
     </header>
     <section>
-      <form class="form grid gap-4">
-        <div class="grid gap-2">
-          <label for="name" class="label">Name</label>
-          <input type="text" id="name" class="input" placeholder="Enter name">
+      <form class="grid gap-4">
+        <div role="group" class="field">
+          <label for="example-dialog-name">Name</label>
+          <input type="text" id="example-dialog-name" placeholder="Enter name" autofocus />
         </div>
-        <div class="grid gap-2">
-          <label for="email" class="label">Email</label>
-          <input type="email" id="email" class="input" placeholder="Enter email">
+        <div role="group" class="field">
+          <label for="example-dialog-email">Email</label>
+          <input type="email" id="example-dialog-email" placeholder="Enter email" />
         </div>
       </form>
     </section>
     <footer>
-      <button onclick="this.closest('dialog').close()" class="btn-outline">Cancel</button>
-      <button class="btn">Save Changes</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Save Changes</button>
     </footer>
-  </article>
+    <button type="button" class="btn" data-variant="ghost" data-size="icon-sm" aria-label="Close dialog" onclick="this.closest('dialog').close()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button>
+  </div>
 </dialog>

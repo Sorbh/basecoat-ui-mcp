@@ -1,21 +1,13 @@
-<!-- Searchable Select with Autocomplete -->
-<div class="select">
-  <button type="button" class="flex items-center justify-between w-full p-2 border rounded">
-    <span>Select framework...</span>
-    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
-  <div data-popover class="w-full border rounded mt-1 bg-background shadow-lg">
-    <header class="p-2 border-b">
-      <input type="text" class="input w-full" placeholder="Search frameworks...">
-    </header>
-    <div role="listbox" class="max-h-48 overflow-y-auto">
-      <div role="option" data-value="react" class="p-2 hover:bg-muted cursor-pointer">React</div>
-      <div role="option" data-value="vue" class="p-2 hover:bg-muted cursor-pointer">Vue</div>
-      <div role="option" data-value="angular" class="p-2 hover:bg-muted cursor-pointer">Angular</div>
-      <div role="option" data-value="svelte" class="p-2 hover:bg-muted cursor-pointer">Svelte</div>
+<!-- Searchable Select with Autocomplete (input-first Combobox) -->
+<div id="framework-combobox" class="combobox w-[240px]">
+  <input type="text" role="combobox" placeholder="Select framework..." autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="framework-combobox-listbox" /><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="combobox-trigger-icon"><path d="m6 9 6 6 6-6" /></svg>
+  <div id="framework-combobox-popover" data-popover aria-hidden="true">
+    <div role="listbox" id="framework-combobox-listbox" aria-orientation="vertical" data-empty="No frameworks found.">
+      <div role="option" data-value="react">React</div>
+      <div role="option" data-value="vue">Vue</div>
+      <div role="option" data-value="angular">Angular</div>
+      <div role="option" data-value="svelte">Svelte</div>
     </div>
   </div>
-  <input type="hidden" name="selected-framework">
+  <input type="hidden" name="selected-framework" value="" />
 </div>

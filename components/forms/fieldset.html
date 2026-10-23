@@ -1,0 +1,25 @@
+<!-- Fieldset: native <fieldset class="fieldset"> with legend, description and grouped fields -->
+<fieldset class="fieldset">
+  <legend>Address Information</legend>
+  <p>We need your address to deliver your order.</p>
+  <div role="group" aria-label="Address fields">
+    <div role="group" class="field">
+      <label for="fieldset-street">Street Address</label>
+      <input id="fieldset-street" type="text" placeholder="123 Main St" />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div role="group" class="field">
+        <label for="fieldset-city">City</label>
+        <input id="fieldset-city" type="text" placeholder="New York" />
+      </div>
+      <div role="group" class="field">
+        <label for="fieldset-zip">Postal Code</label>
+        <input id="fieldset-zip" type="text" placeholder="90502" />
+      </div>
+    </div>
+    <div role="group" class="field" data-orientation="horizontal">
+      <input id="fieldset-same-as-shipping" type="checkbox" checked />
+      <label for="fieldset-same-as-shipping" class="font-normal">Same as shipping address</label>
+    </div>
+  </div>
+</fieldset>

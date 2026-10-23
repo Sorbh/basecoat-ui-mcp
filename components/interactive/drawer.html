@@ -1,0 +1,26 @@
+<!-- Drawer (BETA): bottom sheet built on native <dialog class="drawer">, opened with showModal(). Requires basecoat.min.js + drawer.min.js (or all.min.js) for animated close and backdrop-click close. -->
+<button type="button" class="btn" data-variant="outline" onclick="document.getElementById('drawer-demo').showModal()">Open Drawer</button>
+<dialog id="drawer-demo" class="drawer" aria-labelledby="drawer-demo-title" aria-describedby="drawer-demo-description">
+  <article>
+    <header class="mx-auto w-full max-w-sm">
+      <h2 id="drawer-demo-title">Move Goal</h2>
+      <p id="drawer-demo-description">Set your daily activity goal.</p>
+    </header>
+    <section class="px-4">
+      <div class="mx-auto w-full max-w-sm">
+        <div class="flex items-center justify-center gap-6">
+          <button type="button" class="btn rounded-full" data-variant="outline" data-size="icon-sm" aria-label="Decrease"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+          <div class="text-center">
+            <div class="text-7xl font-bold">350</div>
+            <div class="text-muted-foreground text-xs uppercase">Calories/day</div>
+          </div>
+          <button type="button" class="btn rounded-full" data-variant="outline" data-size="icon-sm" aria-label="Increase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="M12 5v14" /></svg></button>
+        </div>
+      </div>
+    </section>
+    <footer class="mx-auto w-full max-w-sm">
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Submit</button>
+      <button type="button" class="btn" data-variant="outline" onclick="this.closest('dialog').close()">Cancel</button>
+    </footer>
+  </article>
+</dialog>

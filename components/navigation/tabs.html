@@ -1,32 +1,38 @@
-<!-- Tab Navigation with Panels -->
+<!-- Tab Navigation with Panels (requires tabs.min.js or all.min.js) -->
 <div class="tabs w-full" id="demo-tabs">
-  <nav role="tablist" aria-orientation="horizontal" class="border-b">
-    <button type="button" role="tab" aria-selected="true" aria-controls="panel-1" 
-            class="px-4 py-2 border-b-2 border-primary text-primary">
-      Account
-    </button>
-    <button type="button" role="tab" aria-selected="false" aria-controls="panel-2" 
-            class="px-4 py-2 border-b-2 border-transparent hover:border-muted">
-      Password
-    </button>
-    <button type="button" role="tab" aria-selected="false" aria-controls="panel-3" 
-            class="px-4 py-2 border-b-2 border-transparent hover:border-muted">
-      Settings
-    </button>
+  <nav role="tablist" aria-orientation="horizontal" class="w-full">
+    <button type="button" role="tab" id="demo-tabs-tab-1" aria-controls="demo-tabs-panel-1" aria-selected="true" tabindex="0">Account</button>
+    <button type="button" role="tab" id="demo-tabs-tab-2" aria-controls="demo-tabs-panel-2" aria-selected="false" tabindex="-1">Password</button>
+    <button type="button" role="tab" id="demo-tabs-tab-3" aria-controls="demo-tabs-panel-3" aria-selected="false" tabindex="-1">Settings</button>
   </nav>
-  
-  <div role="tabpanel" id="panel-1" aria-selected="true" class="p-4">
-    <h3 class="text-lg font-medium">Account Settings</h3>
-    <p>Manage your account information here.</p>
+
+  <div role="tabpanel" id="demo-tabs-panel-1" aria-labelledby="demo-tabs-tab-1" tabindex="-1" aria-selected="true">
+    <div class="card">
+      <header>
+        <h2>Account Settings</h2>
+        <p>Manage your account information here.</p>
+      </header>
+    </div>
   </div>
-  
-  <div role="tabpanel" id="panel-2" aria-selected="false" class="p-4" hidden>
-    <h3 class="text-lg font-medium">Password Settings</h3>
-    <p>Change your password here.</p>
+
+  <div role="tabpanel" id="demo-tabs-panel-2" aria-labelledby="demo-tabs-tab-2" tabindex="-1" aria-selected="false" hidden>
+    <div class="card">
+      <header>
+        <h2>Password Settings</h2>
+        <p>Change your password here.</p>
+      </header>
+    </div>
   </div>
-  
-  <div role="tabpanel" id="panel-3" aria-selected="false" class="p-4" hidden>
-    <h3 class="text-lg font-medium">App Settings</h3>
-    <p>Configure application preferences.</p>
+
+  <div role="tabpanel" id="demo-tabs-panel-3" aria-labelledby="demo-tabs-tab-3" tabindex="-1" aria-selected="false" hidden>
+    <div class="card">
+      <header>
+        <h2>App Settings</h2>
+        <p>Configure application preferences.</p>
+      </header>
+    </div>
   </div>
 </div>
+
+<!-- Line variant: add data-variant="line" to the tablist -->
+<!-- <nav role="tablist" aria-orientation="horizontal" data-variant="line"> ... </nav> -->

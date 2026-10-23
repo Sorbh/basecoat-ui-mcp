@@ -1,13 +1,20 @@
 <!-- Success Alert -->
-<div class="alert">
-  <svg><!-- success icon --></svg>
+<div class="alert"><svg class="lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
   <h2>Success!</h2>
   <section>Operation completed successfully.</section>
 </div>
 
 <!-- Error Alert -->
-<div class="alert-destructive">
-  <svg><!-- error icon --></svg>
+<div class="alert" data-variant="destructive"><svg class="lucide lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
   <h2>Error!</h2>
   <section>Something went wrong.</section>
+</div>
+
+<!-- Alert with Action -->
+<div class="alert">
+  <h2>Dark mode is now available</h2>
+  <section>Enable it under your profile settings to get started.</section>
+  <footer>
+    <button type="button" class="btn" data-size="xs">Enable</button>
+  </footer>
 </div>

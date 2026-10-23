@@ -1,7 +1,7 @@
 # Card Component Usage
 
 ## Overview
-The card component provides a flexible container for organizing related content. It supports optional headers, content sections, and footers with semantic HTML structure.
+The card component provides a flexible container for organizing related content. It supports an optional header (title, description, and a top-right action), a content section, a footer, a leading image, and a compact size.
 
 ## HTML Structure
 
@@ -10,34 +10,36 @@ The card component provides a flexible container for organizing related content.
 <div class="card">
   <header>
     <h2>Card Title</h2>
-    <p>Card Description (optional)</p>
+    <p>Card Description</p>
+    <div class="card-action">Card Action</div>
   </header>
   <section>
     <p>Card Content</p>
   </section>
   <footer>
-    <p>Card Footer (optional)</p>
+    <p>Card Footer</p>
   </footer>
 </div>
 ```
 
 ## Component Elements
 
-### Card Container
-- `<div class="card">` - Main container with card styling
+| Element | Required | Description |
+| --- | --- | --- |
+| `<div class="card">` | Yes | Card container. Add `data-size="sm"` for a denser layout. |
+| `<img>` | Optional | Image placed before the header for a media card. |
+| `<header>` | Optional | Card header. |
+| `<h2>` or `<h3>` | Optional | Card title (inside header). |
+| `<p>` | Optional | Card description (inside header). |
+| `<div class="card-action">` | Optional | Action or metadata in the top-right of the header. Use `<menu class="card-action">` for a list of commands. |
+| `<section>` | Yes | Main card content. |
+| `<footer>` | Optional | Footer actions or secondary content. |
 
-### Header Section (Optional)
-- `<header>` - Contains card title and optional description
-- `<h2>` - Primary card title
-- `<p>` - Optional subtitle or description
-
-### Content Section
-- `<section>` - Primary content area
-- Can contain any type of content (text, forms, images, etc.)
-
-### Footer Section (Optional)
-- `<footer>` - Optional footer area
-- Typically contains actions, metadata, or supplementary information
+### Size
+| Size | Markup |
+| --- | --- |
+| Default | `class="card"` |
+| Small | `class="card" data-size="sm"` |
 
 ## Implementation Examples
 
@@ -55,29 +57,46 @@ The card component provides a flexible container for organizing related content.
 
 ### Login Card
 ```html
-<div class="card w-full max-w-md">
+<div class="card w-full max-w-sm">
   <header>
     <h2>Login to your account</h2>
-    <p>Enter your details below to login to your account</p>
+    <p>Enter your email below to login to your account</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-variant="link">Sign Up</button>
+    </div>
   </header>
   <section>
-    <form class="form grid gap-4">
-      <div class="grid gap-2">
-        <label for="email" class="label">Email</label>
-        <input class="input" id="email" type="email" required>
+    <form class="grid gap-6">
+      <div role="group" class="field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="m@example.com" required />
       </div>
-      <div class="grid gap-2">
-        <label for="password" class="label">Password</label>
-        <input class="input" id="password" type="password" required>
+      <div role="group" class="field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" required />
       </div>
     </form>
   </section>
-  <footer>
-    <div class="flex gap-2">
-      <button class="btn-outline w-full">Sign Up</button>
-      <button class="btn w-full">Sign In</button>
-    </div>
+  <footer class="flex-col gap-2">
+    <button type="button" class="btn w-full">Login</button>
+    <button type="button" class="btn w-full" data-variant="outline">Login with Google</button>
   </footer>
+</div>
+```
+
+### Small Card
+```html
+<div class="card" data-size="sm">
+  <header>
+    <h2>Small Card</h2>
+    <p>This card uses the small size variant.</p>
+    <div class="card-action">
+      <button type="button" class="btn" data-size="sm" data-variant="outline">Action</button>
+    </div>
+  </header>
+  <section>
+    <p>Compact spacing for dense layouts.</p>
+  </section>
 </div>
 ```
 
@@ -104,34 +123,31 @@ The card component provides a flexible container for organizing related content.
       </div>
     </div>
   </section>
-  <footer>
-    <div class="flex items-center gap-2">
-      <span class="text-sm text-muted-foreground">Participants:</span>
-      <div class="flex -space-x-2">
-        <img class="size-6 rounded-full border-2 border-background" src="/avatar1.jpg" alt="John">
-        <img class="size-6 rounded-full border-2 border-background" src="/avatar2.jpg" alt="Jane">
-      </div>
+  <footer class="gap-2">
+    <span class="text-sm text-muted-foreground">Participants:</span>
+    <div class="avatar-group">
+      <span class="avatar" data-size="sm"><img src="/avatar1.jpg" alt="John" /><span>JD</span></span>
+      <span class="avatar" data-size="sm"><img src="/avatar2.jpg" alt="Jane" /><span>JA</span></span>
     </div>
   </footer>
 </div>
 ```
 
-### Product Card
+### Product Card (Image)
+Place the image before the header.
 ```html
 <div class="card">
+  <img src="/product.jpg" alt="Product" class="aspect-video w-full object-cover" />
   <header>
-    <img src="/product.jpg" alt="Product" class="w-full h-48 object-cover rounded-t-md">
-  </header>
-  <section>
-    <h2 class="text-lg font-semibold">Product Name</h2>
-    <p class="text-muted-foreground">Product description goes here.</p>
-    <p class="text-xl font-bold mt-2">$99.99</p>
-  </section>
-  <footer>
-    <div class="flex gap-2">
-      <button class="btn-outline flex-1">Add to Cart</button>
-      <button class="btn flex-1">Buy Now</button>
+    <h2>Product Name</h2>
+    <p>Product description goes here.</p>
+    <div class="card-action">
+      <span class="badge" data-variant="secondary">$99.99</span>
     </div>
+  </header>
+  <footer class="gap-2">
+    <button type="button" class="btn flex-1" data-variant="outline">Add to Cart</button>
+    <button type="button" class="btn flex-1">Buy Now</button>
   </footer>
 </div>
 ```
@@ -141,10 +157,12 @@ The card component provides a flexible container for organizing related content.
 <div class="card">
   <header>
     <div class="flex items-center gap-3">
-      <div class="btn-lg-icon-outline">📷</div>
+      <div class="flex size-10 items-center justify-center rounded-md border">
+        <svg class="lucide lucide-camera size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" /><circle cx="12" cy="13" r="3" /></svg>
+      </div>
       <div>
         <h2>Photo Gallery</h2>
-        <p class="text-muted-foreground">Manage your photo collection</p>
+        <p>Manage your photo collection</p>
       </div>
     </div>
   </header>
@@ -156,23 +174,27 @@ The card component provides a flexible container for organizing related content.
     </div>
   </section>
   <footer>
-    <button class="btn w-full">Upload More Photos</button>
+    <button type="button" class="btn w-full">Upload More Photos</button>
   </footer>
 </div>
 ```
 
 ## Card Variations
 
-### Header-Only Card
+### Header with Command Menu
 ```html
 <div class="card">
   <header>
     <h2>Quick Actions</h2>
-    <div class="flex gap-2 mt-3">
-      <button class="btn-sm">Action 1</button>
-      <button class="btn-sm-outline">Action 2</button>
-    </div>
+    <p>Shortcuts for common tasks</p>
+    <menu class="card-action flex gap-2">
+      <li><button type="button" class="btn" data-size="sm">Action 1</button></li>
+      <li><button type="button" class="btn" data-size="sm" data-variant="outline">Action 2</button></li>
+    </menu>
   </header>
+  <section>
+    <p>Content</p>
+  </section>
 </div>
 ```
 
@@ -192,6 +214,13 @@ The card component provides a flexible container for organizing related content.
     <h3>Minimal Card</h3>
     <p>Clean and simple design.</p>
   </section>
+</div>
+```
+
+### RTL
+```html
+<div class="card" dir="rtl">
+  <!-- Card content -->
 </div>
 ```
 
@@ -224,10 +253,10 @@ The card component provides a flexible container for organizing related content.
 ```html
 <div class="card">
   <header>
-    <h2 id="card-title">Card Title</h2>
+    <h2 id="card-heading">Card Title</h2>
   </header>
   <section>
-    <button class="btn" aria-describedby="card-title">
+    <button type="button" class="btn" aria-describedby="card-heading">
       Action Button
     </button>
   </section>
@@ -235,13 +264,11 @@ The card component provides a flexible container for organizing related content.
 ```
 
 ### Interactive Cards
+Prefer a real link or button inside the card. If the whole card must be clickable:
 ```html
-<div class="card cursor-pointer hover:shadow-lg transition-shadow" 
-     role="button" 
-     tabindex="0"
-     aria-label="Open card details">
+<a href="/details" class="card hover:shadow-lg transition-shadow" aria-label="Open card details">
   <!-- Card content -->
-</div>
+</a>
 ```
 
 ## Best Practices
@@ -249,20 +276,19 @@ The card component provides a flexible container for organizing related content.
 ### Content Organization
 - Keep card content focused and related
 - Use consistent header structure across cards
+- Put secondary actions or metadata in `.card-action`
 - Limit footer actions to 2-3 buttons
-- Maintain visual hierarchy with typography
 
 ### Layout Considerations
-- Use appropriate spacing between card elements
+- Use `data-size="sm"` instead of overriding padding manually
 - Consider card width and height consistency
 - Implement responsive behavior for different screen sizes
 - Group related cards together
 
 ### Interactive Elements
 - Place primary actions in the footer
-- Use secondary actions in headers when appropriate
+- Use `.card-action` for header actions
 - Ensure adequate touch targets for mobile
-- Provide clear visual feedback for interactions
 
 ## JavaScript Integration
 
@@ -279,9 +305,9 @@ document.addEventListener('click', function(e) {
 
 ### Dynamic Card Creation
 ```javascript
-function createCard(title, content) {
+function createCard(title, content, { small = false } = {}) {
   return `
-    <div class="card">
+    <div class="card"${small ? ' data-size="sm"' : ''}>
       <header>
         <h2>${title}</h2>
       </header>
@@ -292,3 +318,10 @@ function createCard(title, content) {
   `;
 }
 ```
+
+## Migrating from 0.x
+- `card-sm` is now `class="card" data-size="sm"`.
+- Header actions use `<div class="card-action">` inside `<header>`.
+- Button classes inside cards: `btn-outline` becomes `class="btn" data-variant="outline"`, `btn-sm` becomes `class="btn" data-size="sm"`.
+- The `.form` wrapper is gone: wrap each control in `<div role="group" class="field">`.
+- To keep old class names working temporarily, load `@import "basecoat-css/compat";` after Basecoat.

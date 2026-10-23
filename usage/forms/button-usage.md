@@ -1,98 +1,124 @@
 # Button Component Usage
 
 ## Overview
-The button component provides a comprehensive set of button variants, sizes, and states for different UI needs. It supports flexible class combinations and icon integration.
+The button component uses one root class, `btn`, plus optional `data-variant` and `data-size` attributes for variants, sizes, and icon buttons. Use it on a native `<button>` for actions or on an `<a>` for navigation.
+
+## Class and Attribute Reference
+
+| Markup | Description |
+| --- | --- |
+| `class="btn"` | Button root (required). Primary variant and default size when used alone. |
+| `data-variant="secondary\|outline\|ghost\|link\|destructive"` | Visual variant. Omit for primary. |
+| `data-size="xs\|sm\|lg"` | Text button size. Omit for default. |
+| `data-size="icon-xs\|icon-sm\|icon\|icon-lg"` | Square icon-only button sizes. Requires an accessible name (`aria-label`). |
+| `data-icon="inline-start\|inline-end"` | On an inline `<svg>` inside a text button, applies icon-aware spacing. |
 
 ## Button Variants
 
 ### Primary Button
 ```html
-<button class="btn">Primary Action</button>
-<!-- Alternative syntax -->
-<button class="btn-primary">Primary Action</button>
+<button type="button" class="btn">Primary Action</button>
 ```
 
 ### Secondary Button
 ```html
-<button class="btn-secondary">Secondary Action</button>
+<button type="button" class="btn" data-variant="secondary">Secondary Action</button>
 ```
 
 ### Destructive Button
 ```html
-<button class="btn-destructive">Delete Item</button>
+<button type="button" class="btn" data-variant="destructive">Delete Item</button>
 ```
 
 ### Outline Button
 ```html
-<button class="btn-outline">Outline Button</button>
+<button type="button" class="btn" data-variant="outline">Outline Button</button>
 ```
 
 ### Ghost Button
 ```html
-<button class="btn-ghost">Ghost Button</button>
+<button type="button" class="btn" data-variant="ghost">Ghost Button</button>
 ```
 
 ### Link Button
 ```html
-<button class="btn-link">Link Style</button>
+<button type="button" class="btn" data-variant="link">Link Style</button>
 ```
 
 ## Button Sizes
 
+### Extra Small Button
+```html
+<button type="button" class="btn" data-size="xs">Extra Small</button>
+```
+
 ### Small Button
 ```html
-<button class="btn-sm">Small Button</button>
+<button type="button" class="btn" data-size="sm">Small Button</button>
 ```
 
 ### Large Button
 ```html
-<button class="btn-lg">Large Button</button>
+<button type="button" class="btn" data-size="lg">Large Button</button>
 ```
 
 ### Combined Size and Variant
+Variant and size are independent attributes, so any combination works.
 ```html
-<button class="btn-sm-destructive">Small Delete</button>
-<button class="btn-lg-outline">Large Outline</button>
+<button type="button" class="btn" data-variant="destructive" data-size="sm">Small Delete</button>
+<button type="button" class="btn" data-variant="outline" data-size="lg">Large Outline</button>
 ```
 
 ## Icon Buttons
 
+Icon-only buttons need an accessible name, usually with `aria-label`.
+
 ### Basic Icon Button
 ```html
-<button class="btn-icon">
+<button type="button" class="btn" data-size="icon" aria-label="Settings">
   <svg><!-- icon --></svg>
 </button>
 ```
 
 ### Icon Button with Variant
 ```html
-<button class="btn-icon-outline">
+<button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Submit">
   <svg><!-- icon --></svg>
 </button>
 ```
 
-### Large Icon Button
+### Icon Button Sizes
 ```html
-<button class="btn-lg-icon-outline">
+<button type="button" class="btn" data-variant="outline" data-size="icon-xs" aria-label="Submit"><svg><!-- icon --></svg></button>
+<button type="button" class="btn" data-variant="outline" data-size="icon-sm" aria-label="Submit"><svg><!-- icon --></svg></button>
+<button type="button" class="btn" data-variant="outline" data-size="icon" aria-label="Submit"><svg><!-- icon --></svg></button>
+<button type="button" class="btn" data-variant="outline" data-size="icon-lg" aria-label="Submit"><svg><!-- icon --></svg></button>
+```
+
+### Rounded Icon Button
+```html
+<button type="button" class="btn rounded-full" data-variant="outline" data-size="icon" aria-label="Scroll up">
   <svg><!-- icon --></svg>
 </button>
 ```
 
 ## Button with Text and Icon
 
+Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon for icon-aware spacing. Use icon sizes only for icon-only buttons.
+
 ### Leading Icon
 ```html
-<button class="btn">
-  <svg><!-- icon --></svg>
-  Send Email
+<button type="button" class="btn" data-variant="outline" data-size="sm">
+  <svg data-icon="inline-start"><!-- icon --></svg>
+  New Branch
 </button>
 ```
 
 ### Trailing Icon
 ```html
-<button class="btn">
+<button type="button" class="btn">
   Continue
-  <svg><!-- arrow icon --></svg>
+  <svg data-icon="inline-end"><!-- arrow icon --></svg>
 </button>
 ```
 
@@ -100,20 +126,31 @@ The button component provides a comprehensive set of button variants, sizes, and
 
 ### Disabled State
 ```html
-<button class="btn" disabled>Disabled Button</button>
+<button type="button" class="btn" disabled>Disabled Button</button>
 ```
 
 ### Loading State
+Basecoat has no dedicated spinner component: use the Lucide `loader-circle` icon with the `animate-spin` utility.
 ```html
-<button class="btn-outline" disabled>
-  <svg class="animate-spin w-4 h-4 mr-2"><!-- spinner icon --></svg>
-  Loading...
+<button type="button" class="btn" disabled>
+  <svg data-icon="inline-start" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
+  Generating
+</button>
+
+<button type="button" class="btn" data-variant="secondary" disabled>
+  Downloading
+  <svg data-icon="inline-end" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
 </button>
 ```
 
-### Active State
+### Toggle State
 ```html
-<button class="btn" aria-pressed="true">Active Toggle</button>
+<button type="button" class="btn" data-variant="outline" aria-pressed="true">Active Toggle</button>
+```
+
+## Link as Button
+```html
+<a href="/dashboard" class="btn" data-variant="outline">Go to dashboard</a>
 ```
 
 ## Accessibility Guidelines
@@ -121,20 +158,20 @@ The button component provides a comprehensive set of button variants, sizes, and
 ### ARIA Attributes
 ```html
 <!-- Button with expanded state -->
-<button class="btn" aria-expanded="false" aria-controls="menu">
+<button type="button" class="btn" aria-expanded="false" aria-controls="menu">
   Menu
 </button>
 
 <!-- Toggle button -->
-<button class="btn" aria-pressed="false" role="switch">
+<button type="button" class="btn" data-variant="outline" aria-pressed="false">
   Toggle Feature
 </button>
 
 <!-- Button with description -->
-<button class="btn" aria-describedby="help-text">
+<button type="button" class="btn" aria-describedby="help-text">
   Submit
 </button>
-<div id="help-text">This will save your changes</div>
+<p id="help-text" class="text-sm text-muted-foreground">This will save your changes</p>
 ```
 
 ### Focus Management
@@ -159,7 +196,7 @@ The button component provides a comprehensive set of button variants, sizes, and
 ### Icon Usage
 - Use icons to enhance recognition
 - Ensure icons have meaning
-- Provide alt text for screen readers
+- Give icon-only buttons an `aria-label`
 - Test icon clarity at different sizes
 
 ### Interactive States
@@ -174,20 +211,30 @@ The button component provides a comprehensive set of button variants, sizes, and
 ```html
 <form>
   <!-- form fields -->
-  <button type="submit" class="btn">Save Changes</button>
-  <button type="button" class="btn-outline">Cancel</button>
+  <div role="group" class="field" data-orientation="horizontal">
+    <button type="submit" class="btn">Save Changes</button>
+    <button type="button" class="btn" data-variant="outline">Cancel</button>
+  </div>
 </form>
 ```
 
 ### Button Group
+For visually joined buttons, use the Button Group component. For simple spacing, a flex row is enough.
 ```html
+<div role="group" aria-label="Message actions" class="button-group">
+  <button type="button" class="btn" data-variant="outline">Archive</button>
+  <button type="button" class="btn" data-variant="outline">Report</button>
+</div>
+
 <div class="flex gap-2">
-  <button class="btn-outline">Cancel</button>
-  <button class="btn">Confirm</button>
+  <button type="button" class="btn" data-variant="outline">Cancel</button>
+  <button type="button" class="btn">Confirm</button>
 </div>
 ```
 
 ## JavaScript Integration
+
+Buttons are CSS-only; no Basecoat script is required.
 
 ### Event Handling
 ```javascript
@@ -198,13 +245,22 @@ document.querySelector('.btn').addEventListener('click', function(e) {
 
 ### Dynamic State Changes
 ```javascript
+const spinner = '<svg data-icon="inline-start" class="animate-spin lucide lucide-loader-circle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>';
+
 function setLoading(button, loading) {
   if (loading) {
     button.disabled = true;
-    button.innerHTML = '<svg class="animate-spin">...</svg> Loading...';
+    button.innerHTML = spinner + ' Loading...';
   } else {
     button.disabled = false;
     button.innerHTML = 'Submit';
   }
 }
+
+// Variants and sizes are attributes, so change them with dataset
+button.dataset.variant = 'destructive';
+button.dataset.size = 'sm';
 ```
+
+## Migrating from 0.x
+Pre-1.0 combined classes such as `btn-outline`, `btn-sm`, `btn-icon-outline`, `btn-lg-icon-outline`, and `btn-sm-destructive` were replaced by `class="btn"` plus `data-variant` / `data-size`. The optional `basecoat-css/compat` stylesheet (CDN: `dist/basecoat-compat.cdn.min.css`, loaded after Basecoat) keeps the old class names working during migration only; write new markup with the attributes above.

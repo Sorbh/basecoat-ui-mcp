@@ -1,7 +1,8 @@
-<div class="flex items-start gap-3">
-  <input type="checkbox" id="notifications" class="input">
-  <div class="grid gap-2">
-    <label for="notifications" class="label">Email notifications</label>
-    <p class="text-muted-foreground text-sm">Receive email updates about your account activity</p>
-  </div>
+<!-- Checkbox with Label and Description -->
+<div role="group" class="field" data-orientation="horizontal">
+  <input type="checkbox" id="notifications" name="notifications" class="input" aria-describedby="notifications-description" />
+  <section>
+    <label for="notifications">Email notifications</label>
+    <p id="notifications-description">Receive email updates about your account activity.</p>
+  </section>
 </div>

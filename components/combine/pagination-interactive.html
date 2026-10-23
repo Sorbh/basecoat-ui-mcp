@@ -1,0 +1,33 @@
+<!-- Pagination Component -->
+<nav role="navigation" aria-label="Pagination" class="mx-auto flex w-full justify-center">
+    <ul class="flex flex-row items-center gap-1">
+        <!-- Previous -->
+        <li>
+            <button type="button" id="prevPageBtn" class="btn" data-variant="ghost" aria-label="Go to previous page">
+                <svg class="lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+                <span>Previous</span>
+            </button>
+        </li>
+
+        <!-- Page numbers (current page uses the outline variant) -->
+        <li><button type="button" class="btn" data-variant="outline" data-size="icon" data-page="1" aria-current="page">1</button></li>
+        <li><button type="button" class="btn" data-variant="ghost" data-size="icon" data-page="2">2</button></li>
+        <li><button type="button" class="btn" data-variant="ghost" data-size="icon" data-page="3">3</button></li>
+        <li><button type="button" class="btn" data-variant="ghost" data-size="icon" data-page="4">4</button></li>
+        <li><button type="button" class="btn" data-variant="ghost" data-size="icon" data-page="5">5</button></li>
+        <li>
+            <div class="size-9 flex items-center justify-center" aria-hidden="true">
+                <svg class="size-4 shrink-0 lucide lucide-ellipsis" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
+            </div>
+        </li>
+        <li><button type="button" class="btn" data-variant="ghost" data-size="icon" data-page="10">10</button></li>
+
+        <!-- Next -->
+        <li>
+            <button type="button" id="nextPageBtn" class="btn" data-variant="ghost" aria-label="Go to next page">
+                <span>Next</span>
+                <svg class="lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+        </li>
+    </ul>
+</nav>

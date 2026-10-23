@@ -1,12 +1,28 @@
-<!-- Profile Avatar -->
-<img class="size-8 shrink-0 object-cover rounded-full" alt="User avatar" src="/path/to/avatar.jpg">
+<!-- Profile Avatar (image first, fallback <span> second) -->
+<span class="avatar">
+  <img src="https://github.com/shadcn.png" alt="User avatar" />
+  <span>JD</span>
+</span>
 
 <!-- Different Sizes -->
-<img class="size-6 shrink-0 object-cover rounded-full" alt="Small avatar" src="/path/to/avatar.jpg">
-<img class="size-10 shrink-0 object-cover rounded-full" alt="Medium avatar" src="/path/to/avatar.jpg">
-<img class="size-16 shrink-0 object-cover rounded-full" alt="Large avatar" src="/path/to/avatar.jpg">
+<span class="avatar" data-size="sm"><img src="https://github.com/shadcn.png" alt="Small avatar" /><span>JD</span></span>
+<span class="avatar"><img src="https://github.com/shadcn.png" alt="Medium avatar" /><span>JD</span></span>
+<span class="avatar" data-size="lg"><img src="https://github.com/shadcn.png" alt="Large avatar" /><span>JD</span></span>
 
 <!-- Avatar with Fallback -->
-<div class="size-8 shrink-0 rounded-full bg-muted flex items-center justify-center">
-  <span class="text-sm font-medium">JD</span>
+<span class="avatar"><span>JD</span></span>
+
+<!-- Avatar with Status Badge -->
+<span class="avatar">
+  <img src="https://github.com/shadcn.png" alt="User avatar" />
+  <span>JD</span>
+  <span class="avatar-badge bg-green-600 dark:bg-green-800"></span>
+</span>
+
+<!-- Avatar Group with Count -->
+<div class="avatar-group">
+  <span class="avatar"><img src="https://github.com/shadcn.png" alt="Jane Doe" /><span>JD</span></span>
+  <span class="avatar"><img src="https://github.com/maxleiter.png" alt="Max Lee" /><span>ML</span></span>
+  <span class="avatar"><img src="https://github.com/evilrabbit.png" alt="Eve Rabbit" /><span>ER</span></span>
+  <span data-count>+3</span>
 </div>

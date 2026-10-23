@@ -1,3 +1,33 @@
-<form class="form grid gap-6">
-  <!-- form elements automatically styled -->
+<!-- Form Container (fields composed with .fieldset and .field; the old .form wrapper was removed in 1.0) -->
+<form>
+  <fieldset class="fieldset">
+    <legend>Profile</legend>
+    <p>This appears on invoices and emails.</p>
+    <div role="group" aria-label="Profile fields">
+      <div role="group" class="field">
+        <label for="profile-name">Full name</label>
+        <input id="profile-name" type="text" placeholder="Evil Rabbit" required />
+      </div>
+      <div role="group" class="field">
+        <label for="profile-email">Email</label>
+        <input id="profile-email" type="email" placeholder="m@example.com" aria-describedby="profile-email-description" required />
+        <p id="profile-email-description">We'll never share your email.</p>
+      </div>
+      <div role="group" class="field">
+        <label for="profile-bio">Bio</label>
+        <textarea id="profile-bio" placeholder="Tell us a bit about yourself" rows="3"></textarea>
+      </div>
+      <div role="group" class="field" data-orientation="horizontal">
+        <input id="profile-newsletter" type="checkbox" role="switch" />
+        <label for="profile-newsletter">Subscribe to the newsletter</label>
+      </div>
+    </div>
+  </fieldset>
+  <div class="field-separator">
+    <hr role="separator" />
+  </div>
+  <div role="group" class="field" data-orientation="horizontal">
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn" data-variant="outline">Cancel</button>
+  </div>
 </form>
