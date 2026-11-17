@@ -55,3 +55,6 @@ CHANGELOG.md
 # Packed tarballs
 *.tgz
 assets/
+
+# Glama registry metadata
+glama.json
